@@ -3,12 +3,46 @@ import { View, Text, TouchableWithoutFeedback } from "react-native";
 import Checkbox from "./Checkbox";
 import styles from "../styles/CheckboxOptionStyles";
 
-const CheckboxOption = ({ key, label }) => {
-  const [checked, setChecked] = useState(false);
+const CheckboxOption = ({
+  groupValue,
+  value,
+  label,
+  setStoredFilters,
+  storedFilterValue,
+}) => {
+  const [checked, setChecked] = useState(
+    Array.isArray(storedFilterValue[groupValue]) &&
+      storedFilterValue[groupValue].indexOf(value) !== -1
+  );
+
+  const addFilterValue = () => {
+    if (storedFilterValue[groupValue].indexOf(value) === -1) {
+      storedFilterValue[groupValue].push(value);
+    }
+  };
+
+  const removeFilterValue = () => {
+    storedFilterValue[groupValue].pop(value);
+  };
+
+  const checkTheOption = () => {
+    if (!Array.isArray(storedFilterValue[groupValue])) {
+      storedFilterValue[groupValue] = [];
+    }
+
+    if (!checked) {
+      addFilterValue();
+    } else {
+      removeFilterValue();
+    }
+
+    setStoredFilters(storedFilterValue);
+    setChecked(!checked);
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={() => setChecked(!checked)}>
-      <View key={key} style={styles.option}>
+    <TouchableWithoutFeedback onPress={() => checkTheOption()}>
+      <View style={styles.option}>
         <View style={styles.checkbox}>
           <Checkbox checked={checked} />
         </View>

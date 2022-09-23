@@ -3,7 +3,13 @@ import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
 import styles from "../styles/FilterDropDownCheckboxesStyles";
 import CheckboxOption from "./CheckboxOption";
 
-const FilterDropDownCheckboxes = ({ filterBy, filterOptions }) => {
+const FilterDropDownCheckboxes = ({
+  groupValue,
+  filterBy,
+  filterOptions,
+  setStoredFilters,
+  storedFilterValue,
+}) => {
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [openDropIndicatorRotation, setOpenDropIndicatorRotation] =
     useState("0deg");
@@ -31,7 +37,14 @@ const FilterDropDownCheckboxes = ({ filterBy, filterOptions }) => {
         <View style={styles.dropDownOptions}>
           {optionsVisible
             ? filterOptions.map(({ label, value }) => (
-                <CheckboxOption label={label} key={value} />
+                <CheckboxOption
+                  key={value}
+                  groupValue={groupValue}
+                  label={label}
+                  value={value}
+                  setStoredFilters={setStoredFilters}
+                  storedFilterValue={storedFilterValue}
+                />
               ))
             : null}
         </View>

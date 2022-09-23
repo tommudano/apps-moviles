@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
-import styles from "../styles/FilterTextInputStyles"
+import styles from "../styles/FilterTextInputStyles";
 
-const FilterTextInput = ({filterBy}) => {
-    return (
-        <View style={styles.inputContainer}>
-            <TextInput style={styles.textInput} placeholder={`Filtrar por ${filterBy}`} placeholderTextColor="#8F8F8F"/>
-        </View>
-    )
-}
+const FilterTextInput = ({
+  value,
+  setStoredFilters,
+  filterBy,
+  storedFilterValue,
+}) => {
+  const saveFilter = (filterValue) => {
+    storedFilterValue[value] = filterValue;
+    setStoredFilters(storedFilterValue);
+  };
 
-export default FilterTextInput
+  return (
+    <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.textInput}
+        placeholder={storedFilterValue[value] || `Filtrar por ${filterBy}`}
+        placeholderTextColor="#8F8F8F"
+        onChangeText={(filterValue) => saveFilter(filterValue)}
+      />
+    </View>
+  );
+};
+
+export default FilterTextInput;
