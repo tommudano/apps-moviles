@@ -10,6 +10,7 @@ import {
 import FilterTextInput from "./FilterTextInput";
 import FilterDropDownCheckboxes from "./FilterDropDownCheckboxes";
 import styles from "../styles/FilterModalStyles";
+import SubmitButton from "./SubmitButton";
 
 const FilterModal = ({
     modalVisible,
@@ -32,6 +33,11 @@ const FilterModal = ({
         { label: "Desconocido", value: "unknown" },
     ];
 
+    const deleteFilters = () => {
+        setStoredFilters({});
+        setModalVisible(false);
+    };
+
     return (
         <Modal transparent={true} animationType='slide' visible={modalVisible}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -42,7 +48,10 @@ const FilterModal = ({
                                 <Text style={styles.filterTitle}>Filtros</Text>
                             </View>
                             <View style={styles.filtersHeaderRightSide}>
-                                <TouchableOpacity style={styles.deleteFilters}>
+                                <TouchableOpacity
+                                    style={styles.deleteFilters}
+                                    onPress={() => deleteFilters()}
+                                >
                                     <Image
                                         style={styles.deleteFiltersIcon}
                                         source={require("../../assets/trash-solid.png")}
@@ -94,6 +103,11 @@ const FilterModal = ({
                                 storedFilterValue={storedFilters}
                             />
                         </View>
+                        <TouchableOpacity>
+                            <View style={styles.buttonContainer}>
+                                <SubmitButton textContent='Aplicar Filtros' />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>

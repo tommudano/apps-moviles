@@ -66,6 +66,11 @@ const styles = StyleSheet.create({
         color: "#26272C",
         letterSpacing: -0.32,
     },
+    buttonContainer: {
+        marginTop: 30,
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });
 
 export default styles;
