@@ -25,18 +25,6 @@ const Screen3 = () => {
       });
   }, []);
 
-  const formatForImages = (data) => {
-    const fotosAll = []
-    data.map((personaje) => {
-        fotos  = {}
-        fotos.name = personaje.name;
-        fotos.image = 'require(personaje.image)';
-        personaje.image = "require('"+(personaje.image)+"')";
-        fotosAll.push(fotos);
-    });
-    console.log(data);
-  };
-
   const FlatListItemSeparator = () => {
     return (
       <View style={{
@@ -81,7 +69,7 @@ const Screen3 = () => {
             renderItem={({ item }) => (
                 <TouchableOpacity onPress={GetItem.bind(item, item.image)}><View style={{backgroundColor: setColor(item.status), borderTopLeftRadius: 10, borderBottomLeftRadius:10, borderBottomRightRadius:10, borderTopRightRadius:10, width: 290}}><Image style={{borderTopLeftRadius: 10, borderTopRightRadius:10, alignSelf: 'flex-end', width: 270, height: 260}} source = {{uri: item.image}} ></Image><View style={styles.descripcion}>
                     <Text style={styles.textoTouchable}>{item.name}</Text>
-                    <Text style={{flex:1, fontSize: 20,alignSelf: 'flex-end', marginRight: 20, justifyContent: 'center', alignItems: 'center', marginBottom:15}}>{item.species}<Image style={{height: 30, width:30, alignSelf: 'flex-end'}} source={require('../assets/human2.png')}></Image></Text>
+                    <Text style={{flex:1, fontSize: 20,alignSelf: 'flex-end', marginRight: 20, justifyContent: 'center', alignItems: 'center', marginBottom:15}}>{item.species}<Image style={{height: 30, width:30, alignSelf: 'flex-end'}} source={require('../../assets/human2.png')}></Image></Text>
                     </View></View>
                 </TouchableOpacity>
             )}
