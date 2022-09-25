@@ -3,6 +3,7 @@ import { View } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
+import FlatList from "../components/FlatList";
 
 const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,7 @@ const HomeScreen = () => {
                 setSavedFilters={setSavedFilters}
                 savedFilters={savedFilters}
             />
+            <FlatList />
         </View>
     );
 };
