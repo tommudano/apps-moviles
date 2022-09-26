@@ -10,22 +10,45 @@ const FilterDropDownCheckboxes = ({
     setStoredFilters,
     storedFilterValue,
 }) => {
+    const getLabel = (key) => {
+        let label;
+        filterOptions.forEach((option) => {
+            if (option.value === key) {
+                label = option.label;
+            }
+        });
+        return label;
+    };
     const [optionsVisible, setOptionsVisible] = useState(false);
     const [openDropIndicatorRotation, setOpenDropIndicatorRotation] =
         useState("0deg");
+    const [filterIndicationText, setFilterIndicationText] = useState(
+        storedFilterValue[groupValue]
+            ? getLabel(storedFilterValue[groupValue])
+            : `Filtrar por ${filterBy}`
+    );
 
-    const openDropDown = () => {
+    const toggleDropDown = () => {
         setOpenDropIndicatorRotation(optionsVisible ? "0deg" : "180deg");
         setOptionsVisible(!optionsVisible);
+    };
+
+    const setOptionSelected = (label, checked) => {
+        toggleDropDown();
+        if (checked) {
+            setFilterIndicationText(label);
+        } else {
+            setFilterIndicationText(`Filtrar por ${filterBy}`);
+        }
     };
 
     return (
         <View style={styles.dropDownContainer}>
             <View style={styles.dropDownBody}>
-                <TouchableWithoutFeedback onPress={() => openDropDown()}>
+                <TouchableWithoutFeedback onPress={() => toggleDropDown()}>
                     <View style={styles.dropDownInformation}>
                         <Text style={styles.dropDownTitle}>
-                            Filtrar por {filterBy}
+                            {filterIndicationText}
                         </Text>
                         <Image
                             style={[
@@ -50,6 +73,7 @@ const FilterDropDownCheckboxes = ({
                                   value={value}
                                   setStoredFilters={setStoredFilters}
                                   storedFilterValue={storedFilterValue}
+                                  setOptionSelected={setOptionSelected}
                               />
                           ))
                         : null}

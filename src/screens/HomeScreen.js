@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
@@ -8,7 +8,22 @@ import FlatList from "../components/FlatList";
 const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
-    const [savedFilters, setSavedFilters] = useState({});
+    const [characters, setcharacters] = useState();
+    const [loading, setLoading] = useState(true);
+    let url = "https://rickandmortyapi.com/api/character";
+
+    const loadCharacters = (filtering = "") => {
+        fetch(url + filtering)
+            .then((response) => response.json())
+            .then((response) => {
+                setcharacters(response.results);
+                setLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        loadCharacters();
+    }, []);
 
     return (
         <View style={styles.baseBackground}>
@@ -18,10 +33,9 @@ const HomeScreen = () => {
                 setModalVisible={setModalVisible}
                 setStoredFilters={setStoredFilters}
                 storedFilters={storedFilters}
-                setSavedFilters={setSavedFilters}
-                savedFilters={savedFilters}
+                loadCharacters={loadCharacters}
             />
-            <FlatList />
+            <FlatList characters={characters} loading={loading} />
         </View>
     );
 };
