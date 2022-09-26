@@ -17,8 +17,7 @@ const FilterModal = ({
     setModalVisible,
     setStoredFilters,
     storedFilters,
-    setSavedFilters,
-    savedFilters,
+    loadCharacters,
 }) => {
     const genderFilterOptions = [
         { label: "Femenino", value: "female" },
@@ -35,6 +34,15 @@ const FilterModal = ({
 
     const deleteFilters = () => {
         setStoredFilters({});
+        setModalVisible(false);
+    };
+
+    const applyFilters = () => {
+        let filteringURL = "?";
+        Object.keys(storedFilters).forEach((filter) => {
+            filteringURL += `${filter}=${storedFilters[filter]}&`;
+        });
+        loadCharacters(filteringURL);
         setModalVisible(false);
     };
 
@@ -96,14 +104,14 @@ const FilterModal = ({
                                 storedFilterValue={storedFilters}
                             />
                             <FilterDropDownCheckboxes
-                                groupValue='state'
+                                groupValue='status'
                                 filterOptions={statusFilterOptions}
                                 filterBy='estado'
                                 setStoredFilters={setStoredFilters}
                                 storedFilterValue={storedFilters}
                             />
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => applyFilters()}>
                             <View style={styles.buttonContainer}>
                                 <SubmitButton textContent='Aplicar Filtros' />
                             </View>
