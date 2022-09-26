@@ -5,14 +5,13 @@ import {
     Text,
     ActivityIndicator,
     StyleSheet,
-    ScrollView,
     FlatList,
     TouchableOpacity,
     Alert,
     Image,
 } from "react-native";
 
-const Screen3 = ({ characters, loading }) => {
+const Screen3 = ({ characters, loading, showCharacter }) => {
     const FlatListItemSeparator = () => {
         return (
             <View
@@ -59,7 +58,7 @@ const Screen3 = ({ characters, loading }) => {
                             keyExtractor={({ id }, index) => id}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
-                                    onPress={GetItem.bind(item, item.image)}
+                                    onPress={() => showCharacter(item.id)}
                                 >
                                     <View
                                         style={{
