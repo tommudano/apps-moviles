@@ -15,6 +15,22 @@ const CharacterModal = ({
     setCharacterModalVisibility,
 }) => {
     let url = "https://rickandmortyapi.com/api/character";
+
+    const metaDataForStatus = {
+        alive: {
+            color: "#05AA15",
+            image: require("../../assets/aliveStatus.png"),
+        },
+        dead: {
+            color: "#C61307",
+            image: require("../../assets/deadStatus.png"),
+        },
+        unknown: {
+            color: "#9E9E9E",
+            image: require("../../assets/unknownStatus.png"),
+        },
+    };
+
     return (
         <Modal visible={visible} transparent={true} animationType='slide'>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -32,7 +48,12 @@ const CharacterModal = ({
                         <View
                             style={[
                                 styles.characterContainer,
-                                { borderTopColor: "#05AA15" },
+                                {
+                                    borderTopColor:
+                                        metaDataForStatus[
+                                            character.status.toLowerCase()
+                                        ].color,
+                                },
                             ]}
                         >
                             <View>
@@ -43,6 +64,105 @@ const CharacterModal = ({
                                 <View style={styles.characterNameContainer}>
                                     <Text style={styles.characterName}>
                                         {character.name}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.characterInformationContainer}>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={
+                                            metaDataForStatus[
+                                                character.status.toLowerCase()
+                                            ].image
+                                        }
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Status: {character.status.toLowerCase()}
+                                    </Text>
+                                </View>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={require("../../assets/species.png")}
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Species: {character.species}
+                                    </Text>
+                                </View>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={require("../../assets/type.png")}
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Type:{" "}
+                                        {character.type !== ""
+                                            ? character.type
+                                            : "No type asociated"}
+                                    </Text>
+                                </View>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={require("../../assets/gender.png")}
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Gender: {character.gender}
+                                    </Text>
+                                </View>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={require("../../assets/origin.png")}
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Origin: {character.origin.name}
+                                    </Text>
+                                </View>
+                                <View style={styles.characterInformationAspect}>
+                                    <Image
+                                        style={
+                                            styles.characterInformationAspectImage
+                                        }
+                                        source={require("../../assets/location.png")}
+                                    />
+                                    <Text
+                                        style={
+                                            styles.characterInformationAspectText
+                                        }
+                                    >
+                                        Location: {character.location.name}
                                     </Text>
                                 </View>
                             </View>

@@ -8,11 +8,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     body: {
+        marginTop: "97%",
         width: "100%",
         backgroundColor: "#D9D9D9",
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
-        // marginTop: 90,
         paddingTop: 20,
         justifyContent: "center",
         alignItems: "center",
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "90%",
         marginRight: 20,
+        marginBottom: 5,
     },
     closeButton: {
         fontFamily: "Roboto",
@@ -43,8 +44,7 @@ const styles = StyleSheet.create({
     },
     characterNameContainer: {
         backgroundColor: "rgba(0, 0, 0, 0.8)",
-        paddingVertical: 20,
-        paddingLeft: 20,
+        padding: 20,
         position: "absolute",
         width: "100%",
         bottom: 0,
@@ -54,6 +54,26 @@ const styles = StyleSheet.create({
         fontWeight: "900",
         fontSize: 26,
         color: "#FFFFFF",
+        letterSpacing: -0.32,
+    },
+    characterInformationContainer: {
+        paddingHorizontal: 20,
+        paddingVertical: 30,
+    },
+    characterInformationAspect: {
+        flexDirection: "row",
+        marginBottom: 5,
+    },
+    characterInformationAspectImage: {
+        width: 30,
+        height: 30,
+        marginRight: 5,
+    },
+    characterInformationAspectText: {
+        fontFamily: "Roboto",
+        fontWeight: "700",
+        fontSize: 16,
+        color: "#26272C",
         letterSpacing: -0.32,
     },
 });
