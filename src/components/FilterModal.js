@@ -35,6 +35,7 @@ const FilterModal = ({
 
     const deleteFilters = () => {
         setStoredFilters({});
+        setSavedFilters({});
         setModalVisible(false);
     };
 

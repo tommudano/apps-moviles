@@ -34,7 +34,7 @@ const CheckboxOption = ({
             removeFilterValue();
         }
 
-        setStoredFilters(storedFilterValue);
+        setStoredFilters({ ...storedFilterValue });
         setChecked(!checked);
         setOptionSelected(label, !checked);
     };
