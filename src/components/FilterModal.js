@@ -35,7 +35,14 @@ const FilterModal = ({
 
     const deleteFilters = () => {
         setStoredFilters({});
+        setSavedFilters({});
         setModalVisible(false);
+    };
+
+    const applyFilters = () => {
+        setSavedFilters({ ...storedFilters });
+        setModalVisible(false);
+        console.log(savedFilters);
     };
 
     return (
@@ -96,14 +103,14 @@ const FilterModal = ({
                                 storedFilterValue={storedFilters}
                             />
                             <FilterDropDownCheckboxes
-                                groupValue='state'
+                                groupValue='status'
                                 filterOptions={statusFilterOptions}
                                 filterBy='estado'
                                 setStoredFilters={setStoredFilters}
                                 storedFilterValue={storedFilters}
                             />
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => applyFilters()}>
                             <View style={styles.buttonContainer}>
                                 <SubmitButton textContent='Aplicar Filtros' />
                             </View>

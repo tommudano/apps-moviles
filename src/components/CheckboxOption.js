@@ -9,20 +9,18 @@ const CheckboxOption = ({
     label,
     setStoredFilters,
     storedFilterValue,
+    setOptionSelected,
 }) => {
     const [checked, setChecked] = useState(
-        Array.isArray(storedFilterValue[groupValue]) &&
-            storedFilterValue[groupValue].indexOf(value) !== -1
+        storedFilterValue[groupValue] === value
     );
 
     const addFilterValue = () => {
-        if (storedFilterValue[groupValue].indexOf(value) === -1) {
-            storedFilterValue[groupValue].push(value);
-        }
+        storedFilterValue[groupValue] = value;
     };
 
     const removeFilterValue = () => {
-        storedFilterValue[groupValue].pop(value);
+        delete storedFilterValue[groupValue];
     };
 
     const checkTheOption = () => {
@@ -36,8 +34,9 @@ const CheckboxOption = ({
             removeFilterValue();
         }
 
-        setStoredFilters(storedFilterValue);
+        setStoredFilters({ ...storedFilterValue });
         setChecked(!checked);
+        setOptionSelected(label, !checked);
     };
 
     return (
