@@ -17,7 +17,8 @@ const FilterModal = ({
     setModalVisible,
     setStoredFilters,
     storedFilters,
-    loadCharacters,
+    setSavedFilters,
+    savedFilters,
 }) => {
     const genderFilterOptions = [
         { label: "Femenino", value: "female" },
@@ -38,12 +39,9 @@ const FilterModal = ({
     };
 
     const applyFilters = () => {
-        let filteringURL = "?";
-        Object.keys(storedFilters).forEach((filter) => {
-            filteringURL += `${filter}=${storedFilters[filter]}&`;
-        });
-        loadCharacters(filteringURL);
+        setSavedFilters({ ...storedFilters });
         setModalVisible(false);
+        console.log(savedFilters);
     };
 
     return (

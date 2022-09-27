@@ -11,7 +11,13 @@ import {
     Image,
 } from "react-native";
 
-const Screen3 = ({ characters, loading, showCharacter, endReached, endReachedThreshold }) => {
+const Screen3 = ({
+    characters,
+    loading,
+    showCharacter,
+    endReached,
+    endReachedThreshold,
+}) => {
     const FlatListItemSeparator = () => {
         return (
             <View
@@ -26,14 +32,12 @@ const Screen3 = ({ characters, loading, showCharacter, endReached, endReachedThr
 
     const renderFooter = () => {
         return (
-          // Footer View with Loader
-          <View style={styles.footer}>
-            {loading ? (
-              <ActivityIndicator
-                color="black"
-                style={{margin: 15}} />
-            ) : null}
-          </View>
+            // Footer View with Loader
+            <View style={styles.footer}>
+                {loading ? (
+                    <ActivityIndicator color='black' style={{ margin: 15 }} />
+                ) : null}
+            </View>
         );
     };
 
@@ -68,90 +72,90 @@ const Screen3 = ({ characters, loading, showCharacter, endReached, endReachedThr
             return require("../../assets/star.png");
         } else if (characterSpecies === "Disease") {
             return require("../../assets/disease.png");
-        } 
+        }
     };
 
     return (
-        <SafeAreaView style={styles.areaview}>
-            <View style={styles.container}>
-                {loading ? (
-                    <ActivityIndicator size='large' animating={loading} />
-                ) : (
-                    <View
-                        style={{
-                            flex: 1,
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                            backgroundColor: "#c2c2c2",
-                        }}
-                    >
-                        <FlatList
-                            ItemSeparatorComponent={FlatListItemSeparator}
-                            data={characters}
-                            keyExtractor={({ id }, index) => id}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    onPress={() => showCharacter(item.id)}
+        // <SafeAreaView style={styles.areaview}>
+        <View style={styles.container}>
+            {loading ? (
+                <ActivityIndicator size='large' animating={loading} />
+            ) : (
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        backgroundColor: "#c2c2c2",
+                    }}
+                >
+                    <FlatList
+                        ItemSeparatorComponent={FlatListItemSeparator}
+                        data={characters}
+                        keyExtractor={(character) => character.id}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                onPress={() => showCharacter(item.id)}
+                            >
+                                <View
+                                    style={{
+                                        backgroundColor: setColor(item.status),
+                                        borderTopLeftRadius: 10,
+                                        borderBottomLeftRadius: 10,
+                                        borderBottomRightRadius: 10,
+                                        borderTopRightRadius: 10,
+                                        width: 290,
+                                    }}
                                 >
-                                    <View
+                                    <Image
                                         style={{
-                                            backgroundColor: setColor(
-                                                item.status
-                                            ),
                                             borderTopLeftRadius: 10,
-                                            borderBottomLeftRadius: 10,
-                                            borderBottomRightRadius: 10,
                                             borderTopRightRadius: 10,
-                                            width: 290,
+                                            alignSelf: "flex-end",
+                                            width: 270,
+                                            height: 260,
                                         }}
-                                    >
-                                        <Image
+                                        source={{ uri: item.image }}
+                                    ></Image>
+                                    <View style={styles.descripcion}>
+                                        <Text style={styles.textoTouchable}>
+                                            {item.name}
+                                        </Text>
+                                        <Text
                                             style={{
-                                                borderTopLeftRadius: 10,
-                                                borderTopRightRadius: 10,
+                                                flex: 1,
+                                                fontSize: 20,
                                                 alignSelf: "flex-end",
-                                                width: 270,
-                                                height: 260,
+                                                marginRight: 20,
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                marginBottom: 15,
                                             }}
-                                            source={{ uri: item.image }}
-                                        ></Image>
-                                        <View style={styles.descripcion}>
-                                            <Text style={styles.textoTouchable}>
-                                                {item.name}
-                                            </Text>
-                                            <Text
+                                        >
+                                            {item.species}
+                                            <Image
                                                 style={{
-                                                    flex: 1,
-                                                    fontSize: 20,
+                                                    height: 30,
+                                                    width: 30,
                                                     alignSelf: "flex-end",
-                                                    marginRight: 20,
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    marginBottom: 15,
                                                 }}
-                                            >
-                                                {item.species}
-                                                <Image
-                                                    style={{
-                                                        height: 30,
-                                                        width: 30,
-                                                        alignSelf: "flex-end",
-                                                    }}
-                                                    source={setSpeciesLogo(item.species)}
-                                                ></Image>
-                                            </Text>
-                                        </View>
+                                                source={setSpeciesLogo(
+                                                    item.species
+                                                )}
+                                            ></Image>
+                                        </Text>
                                     </View>
-                                </TouchableOpacity>
-                            )}
-                            ListFooterComponent={renderFooter}
-                            onEndReached = {endReached}
-                            onEndReachedThreshold = {endReachedThreshold}
-                        />
-                    </View>
-                )}
-            </View>
-        </SafeAreaView>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                        ListFooterComponent={renderFooter}
+                        onEndReached={endReached}
+                        onEndReachedThreshold={endReachedThreshold}
+                    />
+                </View>
+            )}
+        </View>
+        // {/* </SafeAreaView> */}
     );
 };
 
