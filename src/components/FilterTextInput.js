@@ -10,7 +10,7 @@ const FilterTextInput = ({
 }) => {
     const saveFilter = (filterValue) => {
         storedFilterValue[value] = filterValue;
-        setStoredFilters({ ...storedFilterValue });
+        setStoredFilters(storedFilterValue);
     };
 
     return (

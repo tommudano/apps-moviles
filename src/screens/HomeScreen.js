@@ -33,11 +33,10 @@ const HomeScreen = () => {
         setLoading(true);
         setPage(2);
         let filterURL = buildFilterURL();
-        console.log("first NO RENDER");
+
         await fetch(`${url}?page=1${filterURL}`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data.results);
                 if (data.results && data.results.length > 0) {
                     setcharactersAll([...data.results]);
                 } else {
@@ -53,7 +52,6 @@ const HomeScreen = () => {
     const loadAllCharacters = async () => {
         if (!isListEnd) {
             let filterURL = buildFilterURL();
-            console.log(`${url}?page=${page}${filterURL}`);
             await fetch(`${url}?page=${page}${filterURL}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -79,7 +77,6 @@ const HomeScreen = () => {
         if (initialRender) {
             setInitialRender(false);
         } else {
-            console.log("IN");
             reloadAllCharacters();
         }
     }, [savedFilters]);
