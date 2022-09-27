@@ -13,8 +13,11 @@ const HomeScreen = () => {
     const [loading, setLoading] = useState(true);
     const [loadingCharacter, setLoadingCharacter] = useState(true);
     const [characterToShow, setCharacterToShow] = useState({});
-    const [characterModalVisibility, setCharacterModalVisibility] =
-        useState(false);
+    const [characterModalVisibility, setCharacterModalVisibility] = useState(false);
+    const [loadingAll, setLoadingAll] = useState(false);
+    const [charactersAll, setcharactersAll] = useState([]);
+    const [page, setPage] = useState(1);
+    const [isListEnd, setIsListEnd] = useState(false);
     let url = "https://rickandmortyapi.com/api/character";
 
     const loadCharacters = async (filtering = "") => {
@@ -24,6 +27,31 @@ const HomeScreen = () => {
                 setcharacters(response.results);
             });
         setLoading(false);
+    };
+
+    useEffect(() => {
+        loadAllCharacters();
+    }, []);
+
+    const loadAllCharacters = async () => {
+        if (!loadingAll && !isListEnd) {
+            setLoadingAll(true);
+            await fetch(url + '/?page=' + page)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson.results.length > 0) {
+                setPage(page + 1);
+                setcharactersAll([...charactersAll, ...responseJson.results]);
+                setLoadingAll(false);
+              } else {
+                setIsListEnd(true);
+                setLoadingAll(false);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
     };
 
     const showCharacter = async (characterId) => {
@@ -36,9 +64,9 @@ const HomeScreen = () => {
         setLoadingCharacter(false);
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
         loadCharacters();
-    }, []);
+    }, []);*/
 
     return (
         <View style={styles.baseBackground}>
@@ -54,6 +82,8 @@ const HomeScreen = () => {
                 characters={characters}
                 loading={loading}
                 showCharacter={showCharacter}
+                endReached={loadAllCharacters}
+                endReachedThreshold={1}
             />
             {loadingCharacter ? null : (
                 <CharacterModal

@@ -11,7 +11,7 @@ import {
     Image,
 } from "react-native";
 
-const Screen3 = ({ characters, loading, showCharacter }) => {
+const Screen3 = ({ characters, loading, showCharacter, endReached, endReachedThreshold }) => {
     const FlatListItemSeparator = () => {
         return (
             <View
@@ -24,8 +24,17 @@ const Screen3 = ({ characters, loading, showCharacter }) => {
         );
     };
 
-    const GetItem = (item) => {
-        Alert.alert("Se abre el modal del item: " + item);
+    const renderFooter = () => {
+        return (
+          // Footer View with Loader
+          <View style={styles.footer}>
+            {loading ? (
+              <ActivityIndicator
+                color="black"
+                style={{margin: 15}} />
+            ) : null}
+          </View>
+        );
     };
 
     const setColor = (livingStatus) => {
@@ -36,6 +45,30 @@ const Screen3 = ({ characters, loading, showCharacter }) => {
         } else if (livingStatus === "unknown") {
             return "yellow";
         }
+    };
+
+    const setSpeciesLogo = (characterSpecies) => {
+        if (characterSpecies === "Human") {
+            return require("../../assets/human2.png");
+        } else if (characterSpecies === "Alien") {
+            return require("../../assets/alien.png");
+        } else if (characterSpecies === "Humanoid") {
+            return require("../../assets/humanoid2.png");
+        } else if (characterSpecies === "unknown") {
+            return require("../../assets/question.png");
+        } else if (characterSpecies === "Poopybutthole") {
+            return require("../../assets/poopybutthole.png");
+        } else if (characterSpecies === "Mythological Creature") {
+            return require("../../assets/mythologicalcreature.png");
+        } else if (characterSpecies === "Animal") {
+            return require("../../assets/animal2.png");
+        } else if (characterSpecies === "Robot") {
+            return require("../../assets/robot.png");
+        } else if (characterSpecies === "Cronenberg") {
+            return require("../../assets/star.png");
+        } else if (characterSpecies === "Disease") {
+            return require("../../assets/disease.png");
+        } 
     };
 
     return (
@@ -104,13 +137,16 @@ const Screen3 = ({ characters, loading, showCharacter }) => {
                                                         width: 30,
                                                         alignSelf: "flex-end",
                                                     }}
-                                                    source={require("../../assets/human2.png")}
+                                                    source={setSpeciesLogo(item.species)}
                                                 ></Image>
                                             </Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
                             )}
+                            ListFooterComponent={renderFooter}
+                            onEndReached = {endReached}
+                            onEndReachedThreshold = {endReachedThreshold}
                         />
                     </View>
                 )}
