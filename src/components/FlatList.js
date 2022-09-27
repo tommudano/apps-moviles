@@ -24,7 +24,6 @@ const Screen3 = ({
                 style={{
                     height: 50,
                     width: "100%",
-                    backgroundColor: "#c2c2c2",
                 }}
             ></View>
         );
@@ -85,12 +84,20 @@ const Screen3 = ({
                     style={{
                         flex: 1,
                         flexDirection: "column",
-                        justifyContent: "space-between",
-                        backgroundColor: "#c2c2c2",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        height: "100%",
                     }}
                 >
                     <FlatList
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            flex: 1,
+                        }}
                         ItemSeparatorComponent={FlatListItemSeparator}
+                        ListHeaderComponent={FlatListItemSeparator}
                         data={characters}
                         keyExtractor={(character) => character.id}
                         renderItem={({ item }) => (
@@ -99,51 +106,61 @@ const Screen3 = ({
                             >
                                 <View
                                     style={{
-                                        backgroundColor: setColor(item.status),
-                                        borderTopLeftRadius: 10,
-                                        borderBottomLeftRadius: 10,
-                                        borderBottomRightRadius: 10,
-                                        borderTopRightRadius: 10,
-                                        width: 290,
+                                        flex: 1,
+                                        width: "100%",
+                                        alignItems: "center",
                                     }}
                                 >
-                                    <Image
+                                    <View
                                         style={{
+                                            backgroundColor: setColor(
+                                                item.status
+                                            ),
                                             borderTopLeftRadius: 10,
+                                            borderBottomLeftRadius: 10,
+                                            borderBottomRightRadius: 10,
                                             borderTopRightRadius: 10,
-                                            alignSelf: "flex-end",
-                                            width: 270,
-                                            height: 260,
+                                            width: 290,
                                         }}
-                                        source={{ uri: item.image }}
-                                    ></Image>
-                                    <View style={styles.descripcion}>
-                                        <Text style={styles.textoTouchable}>
-                                            {item.name}
-                                        </Text>
-                                        <Text
+                                    >
+                                        <Image
                                             style={{
-                                                flex: 1,
-                                                fontSize: 20,
+                                                borderTopLeftRadius: 10,
+                                                borderTopRightRadius: 10,
                                                 alignSelf: "flex-end",
-                                                marginRight: 20,
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                marginBottom: 15,
+                                                width: 270,
+                                                height: 260,
                                             }}
-                                        >
-                                            {item.species}
-                                            <Image
+                                            source={{ uri: item.image }}
+                                        ></Image>
+                                        <View style={styles.descripcion}>
+                                            <Text style={styles.textoTouchable}>
+                                                {item.name}
+                                            </Text>
+                                            <Text
                                                 style={{
-                                                    height: 30,
-                                                    width: 30,
+                                                    flex: 1,
+                                                    fontSize: 20,
                                                     alignSelf: "flex-end",
+                                                    marginRight: 20,
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    marginBottom: 15,
                                                 }}
-                                                source={setSpeciesLogo(
-                                                    item.species
-                                                )}
-                                            ></Image>
-                                        </Text>
+                                            >
+                                                {item.species}
+                                                <Image
+                                                    style={{
+                                                        height: 30,
+                                                        width: 30,
+                                                        alignSelf: "flex-end",
+                                                    }}
+                                                    source={setSpeciesLogo(
+                                                        item.species
+                                                    )}
+                                                ></Image>
+                                            </Text>
+                                        </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -199,5 +216,8 @@ const styles = StyleSheet.create({
         height: 64.44,
         width: 270,
         alignSelf: "flex-end",
+    },
+    footer: {
+        height: 50,
     },
 });

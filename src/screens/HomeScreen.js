@@ -37,7 +37,8 @@ const HomeScreen = () => {
         await fetch(`${url}?page=1${filterURL}`)
             .then((response) => response.json())
             .then((data) => {
-                if (data.results.length > 0) {
+                console.log(data.results);
+                if (data.results && data.results.length > 0) {
                     setcharactersAll([...data.results]);
                 } else {
                     setIsListEnd(true);
