@@ -119,7 +119,6 @@ const CharacterFlatList = ({
                                 >
                                     <Image
                                         style={{
-                                            borderTopLeftRadius: 10,
                                             borderTopRightRadius: 10,
                                             alignSelf: "flex-end",
                                             justifyContent: "center",
@@ -213,7 +212,6 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         flex: 1,
         borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10,
         height: "25%",
         width: "93.1%",
         alignSelf: "flex-end",
