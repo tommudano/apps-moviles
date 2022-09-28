@@ -10,6 +10,7 @@ import {
     Alert,
     Image,
 } from "react-native";
+import metaDataForStatus from "./constants/statusValues";
 
 const CharacterFlatList = ({
     isListEnd,
@@ -35,40 +36,6 @@ const CharacterFlatList = ({
                 <ActivityIndicator color='black' style={{ margin: 15 }} />
             </View>
         ) : null;
-    };
-
-    const setColor = (livingStatus) => {
-        if (livingStatus === "Alive") {
-            return "#05AA15";
-        } else if (livingStatus === "Dead") {
-            return "#C61307";
-        } else if (livingStatus === "unknown") {
-            return "#9E9E9E";
-        }
-    };
-
-    const setSpeciesLogo = (characterSpecies) => {
-        if (characterSpecies === "Human") {
-            return require("../../assets/human3.png");
-        } else if (characterSpecies === "Alien") {
-            return require("../../assets/robot2.png");
-        } else if (characterSpecies === "Humanoid") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "unknown") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "Poopybutthole") {
-            return require("../../assets/poop.png");
-        } else if (characterSpecies === "Mythological Creature") {
-            return require("../../assets/dragon-mythological.png");
-        } else if (characterSpecies === "Animal") {
-            return require("../../assets/paw.png");
-        } else if (characterSpecies === "Robot") {
-            return require("../../assets/robot3.png");
-        } else if (characterSpecies === "Cronenberg") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "Disease") {
-            return require("../../assets/virus.png");
-        }
     };
 
     return (
@@ -109,7 +76,10 @@ const CharacterFlatList = ({
                                 <View
                                     style={{
                                         flex: 1,
-                                        backgroundColor: setColor(item.status),
+                                        backgroundColor:
+                                            metaDataForStatus[
+                                                item.status.toLowerCase()
+                                            ].color,
                                         borderTopLeftRadius: 10,
                                         borderBottomLeftRadius: 10,
                                         borderBottomRightRadius: 10,

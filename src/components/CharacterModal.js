@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import styles from "../styles/CharacterModalStyles";
 import metaDataForStatus from "./constants/statusValues";
+import speciesValues from "../../utils/speciesValues";
 
 const CharacterModal = ({
     visible,
@@ -20,30 +21,6 @@ const CharacterModal = ({
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);
-    };
-
-    const setSpeciesLogo = (characterSpecies) => {
-        if (characterSpecies === "Human") {
-            return require("../../assets/human3.png");
-        } else if (characterSpecies === "Alien") {
-            return require("../../assets/robot2.png");
-        } else if (characterSpecies === "Humanoid") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "unknown") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "Poopybutthole") {
-            return require("../../assets/poop.png");
-        } else if (characterSpecies === "Mythological Creature") {
-            return require("../../assets/dragon-mythological.png");
-        } else if (characterSpecies === "Animal") {
-            return require("../../assets/paw.png");
-        } else if (characterSpecies === "Robot") {
-            return require("../../assets/robot3.png");
-        } else if (characterSpecies === "Cronenberg") {
-            return require("../../assets/question2.png");
-        } else if (characterSpecies === "Disease") {
-            return require("../../assets/virus.png");
-        }
     };
 
     return (
@@ -110,7 +87,9 @@ const CharacterModal = ({
                                         style={
                                             styles.characterInformationAspectImage
                                         }
-                                        source={setSpeciesLogo(character.species)}
+                                        source={speciesValues.setSpeciesLogo(
+                                            character.species
+                                        )}
                                     />
                                     <Text
                                         style={
