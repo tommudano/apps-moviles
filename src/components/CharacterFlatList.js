@@ -108,13 +108,14 @@ const CharacterFlatList = ({
                             >
                                 <View
                                     style={{
+                                        flex: 1,
                                         backgroundColor: setColor(item.status),
                                         borderTopLeftRadius: 10,
                                         borderBottomLeftRadius: 10,
                                         borderBottomRightRadius: 10,
                                         borderTopRightRadius: 10,
                                         width: 290,
-                                        height: 380,
+                                        height: 430,
                                     }}
                                 >
                                     <Image
@@ -131,36 +132,6 @@ const CharacterFlatList = ({
                                         <Text style={styles.textoTouchable}>
                                             {item.name}
                                         </Text>
-                                        <View
-                                            style={{
-                                                flex: 1,
-                                                alignSelf: "flex-end",
-                                                marginRight: 20,
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                flexDirection: "row",
-                                                //marginBottom: 15,
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    fontSize: 20,
-                                                    fontFamily: "Roboto",
-                                                }}
-                                            >
-                                                {item.species}
-                                            </Text>
-                                            <Image
-                                                style={{
-                                                    height: 50,
-                                                    width: 50,
-                                                    alignSelf: "flex-end",
-                                                }}
-                                                source={setSpeciesLogo(
-                                                    item.species
-                                                )}
-                                            ></Image>
-                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -206,7 +177,6 @@ const styles = StyleSheet.create({
     textoTouchable: {
         fontSize: 24,
         fontWeight: "bold",
-        marginLeft: 40,
     },
     descripcion: {
         backgroundColor: "white",
@@ -215,6 +185,8 @@ const styles = StyleSheet.create({
         height: "25%",
         width: "93.1%",
         alignSelf: "flex-end",
+        justifyContent: "center",
+        alignItems: "center",
     },
     footer: {
         height: 50,
