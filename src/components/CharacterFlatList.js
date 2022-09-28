@@ -114,6 +114,7 @@ const CharacterFlatList = ({
                                         borderBottomRightRadius: 10,
                                         borderTopRightRadius: 10,
                                         width: 290,
+                                        height: 380
                                     }}
                                 >
                                     <Image
