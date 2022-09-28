@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        flex: 0.3,
+        flex: 0.4,
     },
     filterTitle: {
         fontFamily: "Roboto",
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         letterSpacing: -0.32,
     },
     filtersHeaderRightSide: {
-        flex: 0.7,
+        flex: 0.6,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",

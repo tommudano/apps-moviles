@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text } from "react-native";
-import styles from "../styles/CheckboxStyles";
+import styles from "../styles/RadioButtonStyles";
 
-const Checkbox = ({ checked }) => {
+const RadioButton = ({ checked }) => {
     return (
-        <View style={styles.checkbox}>
+        <View style={styles.radioButton}>
             {checked ? <View style={styles.checked}></View> : null}
         </View>
     );
 };
 
-export default Checkbox;
+export default RadioButton;

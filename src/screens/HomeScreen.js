@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
-import FlatList from "../components/FlatList";
+import CharacterFlatList from "../components/CharacterFlatList";
 import CharacterModal from "../components/CharacterModal";
+import NotFound from "../components/NotFound";
+import fetchCharacters from "../../utils/fetchCharacters";
 
 const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
     const [savedFilters, setSavedFilters] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [loadingCharacter, setLoadingCharacter] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [loadingCharacter, setLoadingCharacter] = useState(false);
+    const [displayCharacter, setDisplayCharacter] = useState(false);
     const [characterToShow, setCharacterToShow] = useState({});
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
@@ -19,83 +22,70 @@ const HomeScreen = () => {
     const [page, setPage] = useState(1);
     const [isListEnd, setIsListEnd] = useState(false);
     const [initialRender, setInitialRender] = useState(true);
-    let url = "https://rickandmortyapi.com/api/character";
+    const [notFound, setNotFound] = useState(false);
 
-    const buildFilterURL = () => {
-        let filterURL = "";
-        Object.keys(savedFilters).forEach((filter) => {
-            filterURL += `&${filter}=${savedFilters[filter]}`;
-        });
-        return filterURL;
+    const loadAllCharacters = () => {
+        fetchCharacters.loadAllCharacters(
+            isListEnd,
+            savedFilters,
+            page,
+            setPage,
+            setcharactersAll,
+            charactersAll,
+            setIsListEnd,
+            setLoading
+        );
     };
 
-    const reloadAllCharacters = async () => {
-        setLoading(true);
-        setPage(2);
-        let filterURL = buildFilterURL();
-        console.log("first NO RENDER");
-        await fetch(`${url}?page=1${filterURL}`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.results.length > 0) {
-                    setcharactersAll([...data.results]);
-                } else {
-                    setIsListEnd(true);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        setLoading(false);
-    };
-
-    const loadAllCharacters = async () => {
-        if (!isListEnd) {
-            let filterURL = buildFilterURL();
-            console.log(`${url}?page=${page}${filterURL}`);
-            await fetch(`${url}?page=${page}${filterURL}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.results.length > 0) {
-                        setPage(page + 1);
-                        setcharactersAll([...charactersAll, ...data.results]);
-                    } else {
-                        setIsListEnd(true);
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-        setLoading(false);
+    const showCharacter = (characterId) => {
+        fetchCharacters.showCharacter(
+            characterId,
+            setLoadingCharacter,
+            setCharacterToShow,
+            setCharacterModalVisibility,
+            setDisplayCharacter
+        );
     };
 
     useEffect(() => {
-        loadAllCharacters();
+        fetchCharacters.loadAllCharacters(
+            isListEnd,
+            savedFilters,
+            page,
+            setPage,
+            setcharactersAll,
+            charactersAll,
+            setIsListEnd,
+            setLoading
+        );
     }, []);
 
     useEffect(() => {
         if (initialRender) {
             setInitialRender(false);
         } else {
-            console.log("IN");
-            reloadAllCharacters();
+            fetchCharacters.reloadAllCharacters(
+                setLoading,
+                setPage,
+                savedFilters,
+                setNotFound,
+                setcharactersAll
+            );
         }
     }, [savedFilters]);
-
-    const showCharacter = async (characterId) => {
-        await fetch(`${url}/${characterId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setCharacterToShow(data);
-                setCharacterModalVisibility(true);
-            });
-        setLoadingCharacter(false);
-    };
 
     return (
         <View style={styles.baseBackground}>
             <Menu setModalVisible={setModalVisible} />
+            {loading || loadingCharacter ? (
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator
+                        size='large'
+                        color='#00ff00'
+                        animating={loading || loadingCharacter}
+                    />
+                </View>
+            ) : null}
             <FilterModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
@@ -104,20 +94,24 @@ const HomeScreen = () => {
                 setSavedFilters={setSavedFilters}
                 savedFilters={savedFilters}
             />
-            <FlatList
-                characters={charactersAll}
-                loading={loading}
-                showCharacter={showCharacter}
-                endReached={loadAllCharacters}
-                endReachedThreshold={8}
-            />
-            {loadingCharacter ? null : (
+            {notFound ? (
+                <NotFound />
+            ) : (
+                <CharacterFlatList
+                    characters={charactersAll}
+                    showCharacter={showCharacter}
+                    endReached={loadAllCharacters}
+                    endReachedThreshold={8}
+                    isListEnd={isListEnd}
+                />
+            )}
+            {displayCharacter ? (
                 <CharacterModal
                     visible={characterModalVisibility}
                     character={characterToShow}
                     setCharacterModalVisibility={setCharacterModalVisibility}
                 />
-            )}
+            ) : null}
         </View>
     );
 };

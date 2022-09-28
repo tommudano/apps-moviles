@@ -8,6 +8,8 @@ import {
     Image,
 } from "react-native";
 import styles from "../styles/CharacterModalStyles";
+import metaDataForStatus from "./constants/statusValues";
+import speciesValues from "../../utils/speciesValues";
 
 const CharacterModal = ({
     visible,
@@ -16,19 +18,9 @@ const CharacterModal = ({
 }) => {
     let url = "https://rickandmortyapi.com/api/character";
 
-    const metaDataForStatus = {
-        alive: {
-            color: "#05AA15",
-            image: require("../../assets/aliveStatus.png"),
-        },
-        dead: {
-            color: "#C61307",
-            image: require("../../assets/deadStatus.png"),
-        },
-        unknown: {
-            color: "#9E9E9E",
-            image: require("../../assets/unknownStatus.png"),
-        },
+    const firstLetterToUpperCase = (word) => {
+        let firstLetterUpperCase = word.charAt(0).toUpperCase();
+        return firstLetterUpperCase + word.slice(1);
     };
 
     return (
@@ -84,7 +76,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Status: {character.status.toLowerCase()}
+                                        Status:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.status
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -92,14 +87,19 @@ const CharacterModal = ({
                                         style={
                                             styles.characterInformationAspectImage
                                         }
-                                        source={require("../../assets/species.png")}
+                                        source={speciesValues.setSpeciesLogo(
+                                            character.species
+                                        )}
                                     />
                                     <Text
                                         style={
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Species: {character.species}
+                                        Species:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.species
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -116,7 +116,9 @@ const CharacterModal = ({
                                     >
                                         Type:{" "}
                                         {character.type !== ""
-                                            ? character.type
+                                            ? firstLetterToUpperCase(
+                                                  character.type
+                                              )
                                             : "No type asociated"}
                                     </Text>
                                 </View>
@@ -132,7 +134,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Gender: {character.gender}
+                                        Gender:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.gender
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -147,7 +152,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Origin: {character.origin.name}
+                                        Origin:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.origin.name
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -162,7 +170,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Location: {character.location.name}
+                                        Location:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.location.name
+                                        )}
                                     </Text>
                                 </View>
                             </View>

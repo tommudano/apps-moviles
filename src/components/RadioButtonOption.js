@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
-import Checkbox from "./Checkbox";
-import styles from "../styles/CheckboxOptionStyles";
+import RadioButton from "./RadioButton";
+import styles from "../styles/RadioButtonOptionStyles";
 
-const CheckboxOption = ({
+const RadioButtonOption = ({
     groupValue,
     value,
     label,
@@ -42,8 +42,8 @@ const CheckboxOption = ({
     return (
         <TouchableWithoutFeedback onPress={() => checkTheOption()}>
             <View style={styles.option}>
-                <View style={styles.checkbox}>
-                    <Checkbox checked={checked} />
+                <View style={styles.radioButton}>
+                    <RadioButton checked={checked} />
                 </View>
                 <Text style={styles.optionLabel}>{label}</Text>
             </View>
@@ -51,4 +51,4 @@ const CheckboxOption = ({
     );
 };
 
-export default CheckboxOption;
+export default RadioButtonOption;
