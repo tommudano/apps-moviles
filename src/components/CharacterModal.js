@@ -16,6 +16,11 @@ const CharacterModal = ({
 }) => {
     let url = "https://rickandmortyapi.com/api/character";
 
+    const firstLetterToUpperCase = (word) => {
+        let firstLetterUpperCase = word.charAt(0).toUpperCase();
+        return firstLetterUpperCase + word.slice(1);
+    };
+
     const metaDataForStatus = {
         alive: {
             color: "#05AA15",
@@ -84,7 +89,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Status: {character.status.toLowerCase()}
+                                        Status:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.status
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -99,7 +107,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Species: {character.species}
+                                        Species:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.species
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -116,7 +127,9 @@ const CharacterModal = ({
                                     >
                                         Type:{" "}
                                         {character.type !== ""
-                                            ? character.type
+                                            ? firstLetterToUpperCase(
+                                                  character.type
+                                              )
                                             : "No type asociated"}
                                     </Text>
                                 </View>
@@ -132,7 +145,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Gender: {character.gender}
+                                        Gender:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.gender
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -147,7 +163,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Origin: {character.origin.name}
+                                        Origin:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.origin.name
+                                        )}
                                     </Text>
                                 </View>
                                 <View style={styles.characterInformationAspect}>
@@ -162,7 +181,10 @@ const CharacterModal = ({
                                             styles.characterInformationAspectText
                                         }
                                     >
-                                        Location: {character.location.name}
+                                        Location:{" "}
+                                        {firstLetterToUpperCase(
+                                            character.location.name
+                                        )}
                                     </Text>
                                 </View>
                             </View>

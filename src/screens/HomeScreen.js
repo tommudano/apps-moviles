@@ -5,6 +5,7 @@ import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
 import FlatList from "../components/FlatList";
 import CharacterModal from "../components/CharacterModal";
+import NotFound from "../components/NotFound";
 
 const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -19,6 +20,7 @@ const HomeScreen = () => {
     const [page, setPage] = useState(1);
     const [isListEnd, setIsListEnd] = useState(false);
     const [initialRender, setInitialRender] = useState(true);
+    const [notFound, setNotFound] = useState(false);
     let url = "https://rickandmortyapi.com/api/character";
 
     const buildFilterURL = () => {
@@ -29,42 +31,39 @@ const HomeScreen = () => {
         return filterURL;
     };
 
-    const reloadAllCharacters = async () => {
+    const reloadAllCharacters = () => {
         setLoading(true);
         setPage(2);
         let filterURL = buildFilterURL();
 
-        await fetch(`${url}?page=1${filterURL}`)
+        fetch(`${url}?page=1${filterURL}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.results && data.results.length > 0) {
+                    setNotFound(false);
                     setcharactersAll([...data.results]);
                 } else {
-                    setIsListEnd(true);
+                    setNotFound(true);
                 }
             })
-            .catch((error) => {
-                console.error(error);
-            });
+            .catch((error) => console.error(error));
         setLoading(false);
     };
 
-    const loadAllCharacters = async () => {
+    const loadAllCharacters = () => {
         if (!isListEnd) {
             let filterURL = buildFilterURL();
-            await fetch(`${url}?page=${page}${filterURL}`)
+            fetch(`${url}?page=${page}${filterURL}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    if (data.results.length > 0) {
+                    if (data.results && data.results.length > 0) {
                         setPage(page + 1);
                         setcharactersAll([...charactersAll, ...data.results]);
                     } else {
                         setIsListEnd(true);
                     }
                 })
-                .catch((error) => {
-                    console.error(error);
-                });
+                .catch((error) => console.error(error));
         }
         setLoading(false);
     };
@@ -81,13 +80,14 @@ const HomeScreen = () => {
         }
     }, [savedFilters]);
 
-    const showCharacter = async (characterId) => {
-        await fetch(`${url}/${characterId}`)
+    const showCharacter = (characterId) => {
+        fetch(`${url}/${characterId}`)
             .then((response) => response.json())
             .then((data) => {
                 setCharacterToShow(data);
                 setCharacterModalVisibility(true);
-            });
+            })
+            .catch((error) => console.log(error));
         setLoadingCharacter(false);
     };
 
@@ -102,13 +102,17 @@ const HomeScreen = () => {
                 setSavedFilters={setSavedFilters}
                 savedFilters={savedFilters}
             />
-            <FlatList
-                characters={charactersAll}
-                loading={loading}
-                showCharacter={showCharacter}
-                endReached={loadAllCharacters}
-                endReachedThreshold={8}
-            />
+            {notFound ? (
+                <NotFound />
+            ) : (
+                <FlatList
+                    characters={charactersAll}
+                    loading={loading}
+                    showCharacter={showCharacter}
+                    endReached={loadAllCharacters}
+                    endReachedThreshold={8}
+                />
+            )}
             {loadingCharacter ? null : (
                 <CharacterModal
                     visible={characterModalVisibility}
