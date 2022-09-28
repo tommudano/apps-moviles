@@ -11,6 +11,7 @@ import {
     Image,
 } from "react-native";
 import metaDataForStatus from "./constants/statusValues";
+import CharacterCard from "../components/CharacterCard";
 
 const CharacterFlatList = ({
     isListEnd,
@@ -62,50 +63,10 @@ const CharacterFlatList = ({
                     data={characters}
                     keyExtractor={(character) => character.id}
                     renderItem={({ item }) => (
-                        <TouchableOpacity
-                            onPress={() => showCharacter(item.id)}
-                        >
-                            <View
-                                style={{
-                                    flex: 1,
-                                    width: "100%",
-                                    alignItems: "center",
-                                    marginBottom: 10,
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        backgroundColor:
-                                            metaDataForStatus[
-                                                item.status.toLowerCase()
-                                            ].color,
-                                        borderTopLeftRadius: 10,
-                                        borderBottomLeftRadius: 10,
-                                        borderBottomRightRadius: 10,
-                                        borderTopRightRadius: 10,
-                                        width: 290,
-                                        height: 430,
-                                    }}
-                                >
-                                    <Image
-                                        style={{
-                                            borderTopRightRadius: 10,
-                                            alignSelf: "flex-end",
-                                            justifyContent: "center",
-                                            width: "93.1%",
-                                            height: "75%",
-                                        }}
-                                        source={{ uri: item.image }}
-                                    ></Image>
-                                    <View style={styles.descripcion}>
-                                        <Text style={styles.textoTouchable}>
-                                            {item.name}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+                        <CharacterCard
+                        item = {item}
+                        showCharacter = {showCharacter}
+                        ></CharacterCard>
                     )}
                     ListFooterComponent={renderFooter}
                     onEndReached={() => endReached()}
@@ -120,41 +81,8 @@ const CharacterFlatList = ({
 export default CharacterFlatList;
 
 const styles = StyleSheet.create({
-    areaview: {
-        backgroundColor: "#c2c2c2",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    texto: {
-        fontSize: 25,
-        fontWeight: "bold",
-        margin: 10,
-    },
-    Texto: {
-        fontSize: 30,
-    },
-    FlatItem: {
-        alignSelf: "center",
-        fontSize: 30,
-        color: "green",
-    },
-    textoTouchable: {
-        fontSize: 24,
-        fontWeight: "bold",
-    },
-    descripcion: {
-        backgroundColor: "white",
-        flex: 1,
-        borderBottomRightRadius: 10,
-        height: "25%",
-        width: "93.1%",
-        alignSelf: "flex-end",
         justifyContent: "center",
         alignItems: "center",
     },
