@@ -114,7 +114,7 @@ const CharacterFlatList = ({
                                         borderBottomRightRadius: 10,
                                         borderTopRightRadius: 10,
                                         width: 290,
-                                        height: 380
+                                        height: 380,
                                     }}
                                 >
                                     <Image
@@ -122,9 +122,9 @@ const CharacterFlatList = ({
                                             borderTopLeftRadius: 10,
                                             borderTopRightRadius: 10,
                                             alignSelf: "flex-end",
-                                            justifyContent: 'center',
-                                            width: '93.1%',
-                                            height: '75%',
+                                            justifyContent: "center",
+                                            width: "93.1%",
+                                            height: "75%",
                                         }}
                                         source={{ uri: item.image }}
                                     ></Image>
@@ -132,18 +132,25 @@ const CharacterFlatList = ({
                                         <Text style={styles.textoTouchable}>
                                             {item.name}
                                         </Text>
-                                        <Text
+                                        <View
                                             style={{
                                                 flex: 1,
-                                                fontSize: 20,
                                                 alignSelf: "flex-end",
                                                 marginRight: 20,
                                                 justifyContent: "center",
                                                 alignItems: "center",
+                                                flexDirection: "row",
                                                 //marginBottom: 15,
                                             }}
                                         >
-                                            {item.species}
+                                            <Text
+                                                style={{
+                                                    fontSize: 20,
+                                                    fontFamily: "Roboto",
+                                                }}
+                                            >
+                                                {item.species}
+                                            </Text>
                                             <Image
                                                 style={{
                                                     height: 50,
@@ -154,7 +161,7 @@ const CharacterFlatList = ({
                                                     item.species
                                                 )}
                                             ></Image>
-                                        </Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -207,8 +214,8 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        height: '25%',
-        width: '93.1%',
+        height: "25%",
+        width: "93.1%",
         alignSelf: "flex-end",
     },
     footer: {
