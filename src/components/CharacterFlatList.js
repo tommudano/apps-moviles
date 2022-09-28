@@ -39,11 +39,11 @@ const CharacterFlatList = ({
 
     const setColor = (livingStatus) => {
         if (livingStatus === "Alive") {
-            return "green";
+            return "#05AA15";
         } else if (livingStatus === "Dead") {
-            return "red";
+            return "#C61307";
         } else if (livingStatus === "unknown") {
-            return "yellow";
+            return "#9E9E9E";
         }
     };
 
