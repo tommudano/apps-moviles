@@ -8,9 +8,13 @@ import {
     ScrollView,
 } from "react-native";
 import FilterTextInput from "./FilterTextInput";
-import FilterDropDownCheckboxes from "./FilterDropDownCheckboxes";
+import FilterDropDownRadioButton from "./FilterDropDownRadioButton";
 import styles from "../styles/FilterModalStyles";
 import SubmitButton from "./SubmitButton";
+import {
+    genderFilterOptions,
+    statusFilterOptions,
+} from "./constants/filterValues";
 
 const FilterModal = ({
     modalVisible,
@@ -20,19 +24,6 @@ const FilterModal = ({
     setSavedFilters,
     savedFilters,
 }) => {
-    const genderFilterOptions = [
-        { label: "Female", value: "female" },
-        { label: "Male", value: "male" },
-        { label: "Genderless", value: "genderless" },
-        { label: "Unknown", value: "unknown" },
-    ];
-
-    const statusFilterOptions = [
-        { label: "Alive", value: "alive" },
-        { label: "Dead", value: "dead" },
-        { label: "Unknown", value: "unknown" },
-    ];
-
     const deleteFilters = () => {
         setStoredFilters({});
         setSavedFilters({});
@@ -42,7 +33,6 @@ const FilterModal = ({
     const applyFilters = () => {
         setSavedFilters({ ...storedFilters });
         setModalVisible(false);
-        console.log(savedFilters);
     };
 
     return (
@@ -95,14 +85,14 @@ const FilterModal = ({
                                 storedFilterValue={storedFilters}
                                 filterBy='type'
                             />
-                            <FilterDropDownCheckboxes
+                            <FilterDropDownRadioButton
                                 groupValue='gender'
                                 filterOptions={genderFilterOptions}
                                 filterBy='gender'
                                 setStoredFilters={setStoredFilters}
                                 storedFilterValue={storedFilters}
                             />
-                            <FilterDropDownCheckboxes
+                            <FilterDropDownRadioButton
                                 groupValue='status'
                                 filterOptions={statusFilterOptions}
                                 filterBy='status'

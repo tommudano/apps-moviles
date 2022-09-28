@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
-import styles from "../styles/FilterDropDownCheckboxesStyles";
-import CheckboxOption from "./CheckboxOption";
+import styles from "../styles/FilterDropDownRadioButtonStyles";
+import RadioButtonOption from "./RadioButtonOption";
 
-const FilterDropDownCheckboxes = ({
+const FilterDropDownRadioButton = ({
     groupValue,
     filterBy,
     filterOptions,
@@ -66,7 +66,7 @@ const FilterDropDownCheckboxes = ({
                 <View style={styles.dropDownOptions}>
                     {optionsVisible
                         ? filterOptions.map(({ label, value }) => (
-                              <CheckboxOption
+                              <RadioButtonOption
                                   key={value}
                                   groupValue={groupValue}
                                   label={label}
@@ -83,4 +83,4 @@ const FilterDropDownCheckboxes = ({
     );
 };
 
-export default FilterDropDownCheckboxes;
+export default FilterDropDownRadioButton;

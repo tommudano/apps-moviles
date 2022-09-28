@@ -9,19 +9,22 @@ const FilterTextInput = ({
     storedFilterValue,
 }) => {
     const saveFilter = (filterValue) => {
-        storedFilterValue[value] = filterValue;
-        setStoredFilters(storedFilterValue);
+        if (filterValue.trim()) {
+            storedFilterValue[value] = filterValue;
+        } else {
+            delete storedFilterValue[value];
+        }
+        setStoredFilters({ ...storedFilterValue });
     };
 
     return (
         <View style={styles.inputContainer}>
             <TextInput
                 style={styles.textInput}
-                placeholder={
-                    storedFilterValue[value] || `Filter by ${filterBy}`
-                }
+                placeholder={`Filter by ${filterBy}`}
                 placeholderTextColor='#8F8F8F'
-                onChangeText={(filterValue) => saveFilter(filterValue)}
+                value={storedFilterValue[value]}
+                onChangeText={(text) => saveFilter(text)}
             />
         </View>
     );

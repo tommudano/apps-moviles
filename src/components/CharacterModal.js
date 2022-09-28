@@ -8,6 +8,7 @@ import {
     Image,
 } from "react-native";
 import styles from "../styles/CharacterModalStyles";
+import metaDataForStatus from "./constants/statusValues";
 
 const CharacterModal = ({
     visible,
@@ -19,21 +20,6 @@ const CharacterModal = ({
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);
-    };
-
-    const metaDataForStatus = {
-        alive: {
-            color: "#05AA15",
-            image: require("../../assets/aliveStatus.png"),
-        },
-        dead: {
-            color: "#C61307",
-            image: require("../../assets/deadStatus.png"),
-        },
-        unknown: {
-            color: "#9E9E9E",
-            image: require("../../assets/unknownStatus.png"),
-        },
     };
 
     return (

@@ -3,9 +3,10 @@ import { View, ActivityIndicator } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
-import FlatList from "../components/FlatList";
+import CharacterFlatList from "../components/CharacterFlatList";
 import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
+import fetchCharacters from "../../utils/fetchCharacters";
 
 const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -22,78 +23,56 @@ const HomeScreen = () => {
     const [isListEnd, setIsListEnd] = useState(false);
     const [initialRender, setInitialRender] = useState(true);
     const [notFound, setNotFound] = useState(false);
-    let url = "https://rickandmortyapi.com/api/character";
 
-    const buildFilterURL = () => {
-        let filterURL = "";
-        Object.keys(savedFilters).forEach((filter) => {
-            filterURL += `&${filter}=${savedFilters[filter]}`;
-        });
-        return filterURL;
+    const loadAllCharacters = () => {
+        fetchCharacters.loadAllCharacters(
+            isListEnd,
+            savedFilters,
+            page,
+            setPage,
+            setcharactersAll,
+            charactersAll,
+            setIsListEnd,
+            setLoading
+        );
     };
 
-    const reloadAllCharacters = async () => {
-        setLoading(true);
-        setPage(2);
-        let filterURL = buildFilterURL();
-
-        await fetch(`${url}?page=1${filterURL}`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.results && data.results.length > 0) {
-                    setNotFound(false);
-                    setcharactersAll([...data.results]);
-                } else {
-                    setNotFound(true);
-                }
-            })
-            .catch((error) => console.error(error));
-        setLoading(false);
-    };
-
-    const loadAllCharacters = async () => {
-        setLoading(true);
-        if (!isListEnd) {
-            let filterURL = buildFilterURL();
-            await fetch(`${url}?page=${page}${filterURL}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.results && data.results.length > 0) {
-                        setPage(page + 1);
-                        setcharactersAll([...charactersAll, ...data.results]);
-                    } else {
-                        setIsListEnd(true);
-                    }
-                })
-                .catch((error) => console.error(error));
-        }
-        setLoading(false);
+    const showCharacter = (characterId) => {
+        fetchCharacters.showCharacter(
+            characterId,
+            setLoadingCharacter,
+            setCharacterToShow,
+            setCharacterModalVisibility,
+            setDisplayCharacter
+        );
     };
 
     useEffect(() => {
-        loadAllCharacters();
+        fetchCharacters.loadAllCharacters(
+            isListEnd,
+            savedFilters,
+            page,
+            setPage,
+            setcharactersAll,
+            charactersAll,
+            setIsListEnd,
+            setLoading
+        );
     }, []);
 
     useEffect(() => {
         if (initialRender) {
             setInitialRender(false);
         } else {
-            reloadAllCharacters();
+            fetchCharacters.reloadAllCharacters(
+                setLoading,
+                setPage,
+                savedFilters,
+                setNotFound,
+                setcharactersAll
+            );
         }
     }, [savedFilters]);
-
-    const showCharacter = async (characterId) => {
-        setLoadingCharacter(true);
-        await fetch(`${url}/${characterId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setCharacterToShow(data);
-                setCharacterModalVisibility(true);
-                setDisplayCharacter(true);
-            })
-            .catch((error) => console.log(error));
-        setLoadingCharacter(false);
-    };
 
     return (
         <View style={styles.baseBackground}>
@@ -118,11 +97,12 @@ const HomeScreen = () => {
             {notFound ? (
                 <NotFound />
             ) : (
-                <FlatList
+                <CharacterFlatList
                     characters={charactersAll}
                     showCharacter={showCharacter}
                     endReached={loadAllCharacters}
                     endReachedThreshold={8}
+                    isListEnd={isListEnd}
                 />
             )}
             {displayCharacter ? (

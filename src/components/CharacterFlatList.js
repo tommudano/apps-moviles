@@ -11,7 +11,8 @@ import {
     Image,
 } from "react-native";
 
-const Screen3 = ({
+const CharacterFlatList = ({
+    isListEnd,
     characters,
     showCharacter,
     endReached,
@@ -21,7 +22,7 @@ const Screen3 = ({
         return (
             <View
                 style={{
-                    height: 50,
+                    height: 40,
                     width: "100%",
                 }}
             ></View>
@@ -29,12 +30,11 @@ const Screen3 = ({
     };
 
     const renderFooter = () => {
-        return (
-            // Footer View with Loader
+        return isListEnd === false ? (
             <View style={styles.footer}>
                 <ActivityIndicator color='black' style={{ margin: 15 }} />
             </View>
-        );
+        ) : null;
     };
 
     const setColor = (livingStatus) => {
@@ -103,6 +103,7 @@ const Screen3 = ({
                                     flex: 1,
                                     width: "100%",
                                     alignItems: "center",
+                                    marginBottom: 10,
                                 }}
                             >
                                 <View
@@ -158,7 +159,7 @@ const Screen3 = ({
                         </TouchableOpacity>
                     )}
                     ListFooterComponent={renderFooter}
-                    onEndReached={endReached}
+                    onEndReached={() => endReached()}
                     onEndReachedThreshold={endReachedThreshold}
                 />
             </View>
@@ -167,7 +168,7 @@ const Screen3 = ({
     );
 };
 
-export default Screen3;
+export default CharacterFlatList;
 
 const styles = StyleSheet.create({
     areaview: {
