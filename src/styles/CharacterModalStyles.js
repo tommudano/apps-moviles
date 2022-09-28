@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     characterInformationAspectImage: {
-        width: 30,
-        height: 30,
+        width: 45,
+        height: 45,
         marginRight: 5,
     },
     characterInformationAspectText: {

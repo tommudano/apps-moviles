@@ -49,25 +49,25 @@ const CharacterFlatList = ({
 
     const setSpeciesLogo = (characterSpecies) => {
         if (characterSpecies === "Human") {
-            return require("../../assets/human2.png");
+            return require("../../assets/human3.png");
         } else if (characterSpecies === "Alien") {
-            return require("../../assets/alien.png");
+            return require("../../assets/robot2.png");
         } else if (characterSpecies === "Humanoid") {
-            return require("../../assets/humanoid2.png");
+            return require("../../assets/question2.png");
         } else if (characterSpecies === "unknown") {
-            return require("../../assets/question.png");
+            return require("../../assets/question2.png");
         } else if (characterSpecies === "Poopybutthole") {
-            return require("../../assets/poopybutthole.png");
+            return require("../../assets/poop.png");
         } else if (characterSpecies === "Mythological Creature") {
-            return require("../../assets/mythologicalcreature.png");
+            return require("../../assets/dragon-mythological.png");
         } else if (characterSpecies === "Animal") {
-            return require("../../assets/animal2.png");
+            return require("../../assets/paw.png");
         } else if (characterSpecies === "Robot") {
-            return require("../../assets/robot.png");
+            return require("../../assets/robot3.png");
         } else if (characterSpecies === "Cronenberg") {
-            return require("../../assets/star.png");
+            return require("../../assets/question2.png");
         } else if (characterSpecies === "Disease") {
-            return require("../../assets/disease.png");
+            return require("../../assets/virus.png");
         }
     };
 
@@ -121,8 +121,9 @@ const CharacterFlatList = ({
                                             borderTopLeftRadius: 10,
                                             borderTopRightRadius: 10,
                                             alignSelf: "flex-end",
-                                            width: 270,
-                                            height: 260,
+                                            justifyContent: 'center',
+                                            width: '93.1%',
+                                            height: '75%',
                                         }}
                                         source={{ uri: item.image }}
                                     ></Image>
@@ -138,14 +139,14 @@ const CharacterFlatList = ({
                                                 marginRight: 20,
                                                 justifyContent: "center",
                                                 alignItems: "center",
-                                                marginBottom: 15,
+                                                //marginBottom: 15,
                                             }}
                                         >
                                             {item.species}
                                             <Image
                                                 style={{
-                                                    height: 30,
-                                                    width: 30,
+                                                    height: 50,
+                                                    width: 50,
                                                     alignSelf: "flex-end",
                                                 }}
                                                 source={setSpeciesLogo(
@@ -205,8 +206,8 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        height: 64.44,
-        width: 270,
+        height: '25%',
+        width: '93.1%',
         alignSelf: "flex-end",
     },
     footer: {
