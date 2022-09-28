@@ -18,7 +18,7 @@ const FilterTextInput = ({
             <TextInput
                 style={styles.textInput}
                 placeholder={
-                    storedFilterValue[value] || `Filtrar por ${filterBy}`
+                    storedFilterValue[value] || `Filter by ${filterBy}`
                 }
                 placeholderTextColor='#8F8F8F'
                 onChangeText={(filterValue) => saveFilter(filterValue)}

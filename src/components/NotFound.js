@@ -9,9 +9,7 @@ const NotFound = () => {
                 source={require("../../assets/notFound.png")}
                 style={styles.notFoundImage}
             />
-            <Text style={styles.notFoundText}>
-                No se han encontrado resultados
-            </Text>
+            <Text style={styles.notFoundText}>No results were found</Text>
         </View>
     );
 };

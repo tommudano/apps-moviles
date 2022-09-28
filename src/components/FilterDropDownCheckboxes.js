@@ -25,7 +25,7 @@ const FilterDropDownCheckboxes = ({
     const [filterIndicationText, setFilterIndicationText] = useState(
         storedFilterValue[groupValue]
             ? getLabel(storedFilterValue[groupValue])
-            : `Filtrar por ${filterBy}`
+            : `Filter by ${filterBy}`
     );
 
     const toggleDropDown = () => {
@@ -38,7 +38,7 @@ const FilterDropDownCheckboxes = ({
         if (checked) {
             setFilterIndicationText(label);
         } else {
-            setFilterIndicationText(`Filtrar por ${filterBy}`);
+            setFilterIndicationText(`Filter by ${filterBy}`);
         }
     };
 

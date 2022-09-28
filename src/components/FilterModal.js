@@ -21,16 +21,16 @@ const FilterModal = ({
     savedFilters,
 }) => {
     const genderFilterOptions = [
-        { label: "Femenino", value: "female" },
-        { label: "Masculino", value: "male" },
-        { label: "Sin Genero", value: "genderless" },
-        { label: "Desconocido", value: "unknown" },
+        { label: "Female", value: "female" },
+        { label: "Male", value: "male" },
+        { label: "Genderless", value: "genderless" },
+        { label: "Unknown", value: "unknown" },
     ];
 
     const statusFilterOptions = [
-        { label: "Vivo", value: "alive" },
-        { label: "Muerto", value: "dead" },
-        { label: "Desconocido", value: "unknown" },
+        { label: "Alive", value: "alive" },
+        { label: "Dead", value: "dead" },
+        { label: "Unknown", value: "unknown" },
     ];
 
     const deleteFilters = () => {
@@ -64,7 +64,7 @@ const FilterModal = ({
                                         source={require("../../assets/trash-solid.png")}
                                     />
                                     <Text style={styles.deleteFiltersText}>
-                                        Eliminar Filtros
+                                        Clear Filters
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -81,38 +81,38 @@ const FilterModal = ({
                                 setStoredFilters={setStoredFilters}
                                 value='name'
                                 storedFilterValue={storedFilters}
-                                filterBy='nombre'
+                                filterBy='name'
                             />
                             <FilterTextInput
                                 setStoredFilters={setStoredFilters}
                                 value='species'
                                 storedFilterValue={storedFilters}
-                                filterBy='especie'
+                                filterBy='species'
                             />
                             <FilterTextInput
                                 setStoredFilters={setStoredFilters}
                                 value='type'
                                 storedFilterValue={storedFilters}
-                                filterBy='tipo'
+                                filterBy='type'
                             />
                             <FilterDropDownCheckboxes
                                 groupValue='gender'
                                 filterOptions={genderFilterOptions}
-                                filterBy='genero'
+                                filterBy='gender'
                                 setStoredFilters={setStoredFilters}
                                 storedFilterValue={storedFilters}
                             />
                             <FilterDropDownCheckboxes
                                 groupValue='status'
                                 filterOptions={statusFilterOptions}
-                                filterBy='estado'
+                                filterBy='status'
                                 setStoredFilters={setStoredFilters}
                                 storedFilterValue={storedFilters}
                             />
                         </View>
                         <TouchableOpacity onPress={() => applyFilters()}>
                             <View style={styles.buttonContainer}>
-                                <SubmitButton textContent='Aplicar Filtros' />
+                                <SubmitButton textContent='Apply Filters' />
                             </View>
                         </TouchableOpacity>
                     </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
@@ -11,8 +11,9 @@ const HomeScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
     const [savedFilters, setSavedFilters] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [loadingCharacter, setLoadingCharacter] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [loadingCharacter, setLoadingCharacter] = useState(false);
+    const [displayCharacter, setDisplayCharacter] = useState(false);
     const [characterToShow, setCharacterToShow] = useState({});
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
@@ -31,12 +32,12 @@ const HomeScreen = () => {
         return filterURL;
     };
 
-    const reloadAllCharacters = () => {
+    const reloadAllCharacters = async () => {
         setLoading(true);
         setPage(2);
         let filterURL = buildFilterURL();
 
-        fetch(`${url}?page=1${filterURL}`)
+        await fetch(`${url}?page=1${filterURL}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.results && data.results.length > 0) {
@@ -50,10 +51,11 @@ const HomeScreen = () => {
         setLoading(false);
     };
 
-    const loadAllCharacters = () => {
+    const loadAllCharacters = async () => {
+        setLoading(true);
         if (!isListEnd) {
             let filterURL = buildFilterURL();
-            fetch(`${url}?page=${page}${filterURL}`)
+            await fetch(`${url}?page=${page}${filterURL}`)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.results && data.results.length > 0) {
@@ -80,12 +82,14 @@ const HomeScreen = () => {
         }
     }, [savedFilters]);
 
-    const showCharacter = (characterId) => {
-        fetch(`${url}/${characterId}`)
+    const showCharacter = async (characterId) => {
+        setLoadingCharacter(true);
+        await fetch(`${url}/${characterId}`)
             .then((response) => response.json())
             .then((data) => {
                 setCharacterToShow(data);
                 setCharacterModalVisibility(true);
+                setDisplayCharacter(true);
             })
             .catch((error) => console.log(error));
         setLoadingCharacter(false);
@@ -94,6 +98,15 @@ const HomeScreen = () => {
     return (
         <View style={styles.baseBackground}>
             <Menu setModalVisible={setModalVisible} />
+            {loading || loadingCharacter ? (
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator
+                        size='large'
+                        color='#00ff00'
+                        animating={loading || loadingCharacter}
+                    />
+                </View>
+            ) : null}
             <FilterModal
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
@@ -107,19 +120,18 @@ const HomeScreen = () => {
             ) : (
                 <FlatList
                     characters={charactersAll}
-                    loading={loading}
                     showCharacter={showCharacter}
                     endReached={loadAllCharacters}
                     endReachedThreshold={8}
                 />
             )}
-            {loadingCharacter ? null : (
+            {displayCharacter ? (
                 <CharacterModal
                     visible={characterModalVisibility}
                     character={characterToShow}
                     setCharacterModalVisibility={setCharacterModalVisibility}
                 />
-            )}
+            ) : null}
         </View>
     );
 };
