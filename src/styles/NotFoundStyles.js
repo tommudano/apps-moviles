@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     notFoundContainer: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "600",
         fontSize: 20,
-        color: "#26272C",
+        color: colors.defaultTextColor,
         letterSpacing: -0.32,
     },
 });

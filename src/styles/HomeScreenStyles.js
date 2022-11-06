@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     baseBackground: {
-        backgroundColor: "#DADADA",
+        backgroundColor: colors.appBackground,
         flex: 1,
         height: "100%",
     },
     loaderContainer: {
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        backgroundColor: colors.difuseBackground,
         position: "absolute",
         top: 0,
         left: 0,

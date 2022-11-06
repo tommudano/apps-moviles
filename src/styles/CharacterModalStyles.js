@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        backgroundColor: colors.difuseBackground,
         flex: 1,
         justifyContent: "flex-end",
         alignItems: "center",
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     body: {
         marginTop: "97%",
         width: "100%",
-        backgroundColor: "#D9D9D9",
+        backgroundColor: colors.modalBodyBackgorund,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
         paddingTop: 20,
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     },
     characterContainer: {
         width: "90%",
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.characterModalBackgorund,
         borderTopWidth: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "900",
         fontSize: 16,
-        color: "#26272C",
+        color: colors.defaultTextColor,
         letterSpacing: -0.32,
     },
     characterImage: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         height: 250,
     },
     characterNameContainer: {
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backgroundColor: colors.characterNameFrame,
         padding: 20,
         position: "absolute",
         width: "100%",
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "900",
         fontSize: 26,
-        color: "#FFFFFF",
+        color: colors.characterName,
         letterSpacing: -0.32,
     },
     characterInformationContainer: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "700",
         fontSize: 16,
-        color: "#26272C",
+        color: colors.defaultTextColor,
         letterSpacing: -0.32,
     },
 });

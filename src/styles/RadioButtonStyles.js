@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     radioButton: {
         height: "100%",
         width: "100%",
-        borderColor: "#057AFF",
+        borderColor: colors.radioButtonColor,
         borderRadius: 100,
         borderWidth: 2,
         justifyContent: "center",
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     },
     checked: {
         borderRadius: 100,
-        backgroundColor: "#057AFF",
+        backgroundColor: colors.radioButtonColor,
         height: "70%",
         width: "70%",
     },

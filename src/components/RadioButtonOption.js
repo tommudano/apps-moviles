@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import RadioButton from "./RadioButton";
 import styles from "../styles/RadioButtonOptionStyles";
@@ -24,20 +24,20 @@ const RadioButtonOption = ({
     };
 
     const checkTheOption = () => {
-        if (!Array.isArray(storedFilterValue[groupValue])) {
-            storedFilterValue[groupValue] = [];
-        }
-
         if (!checked) {
-            addFilterValue();
+            storedFilterValue[groupValue] = value;
         } else {
-            removeFilterValue();
+            delete storedFilterValue[groupValue];
         }
 
         setStoredFilters({ ...storedFilterValue });
         setChecked(!checked);
         setOptionSelected(label, !checked);
     };
+
+    useEffect(() => {
+        setChecked(storedFilterValue[groupValue] === value);
+    }, [storedFilterValue]);
 
     return (
         <TouchableWithoutFeedback onPress={() => checkTheOption()}>

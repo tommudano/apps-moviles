@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     option: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         letterSpacing: -0.32,
         fontWeight: "700",
-        color: "#26272C",
+        color: colors.defaultTextColor,
         marginLeft: 10,
     },
     radioButton: {

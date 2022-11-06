@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     apiLogo: {
@@ -10,13 +11,13 @@ const styles = StyleSheet.create({
         width: 55,
     },
     navBar: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: colors.menuBackgorund,
         height: 85,
         flexDirection: "row",
         justifyContent: "space-between",
         paddingHorizontal: 20,
         alignItems: "center",
-        shadowColor: "#000000",
+        shadowColor: colors.shadowColor,
         elevation: 20,
         zIndex: 2,
     },

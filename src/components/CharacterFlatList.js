@@ -1,19 +1,10 @@
 import React from "react";
-import {
-    SafeAreaView,
-    View,
-    Text,
-    ActivityIndicator,
-    StyleSheet,
-    FlatList,
-    TouchableOpacity,
-    Alert,
-    Image,
-} from "react-native";
-import metaDataForStatus from "./constants/statusValues";
+import { View, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import CharacterCard from "../components/CharacterCard";
+import styles from "../styles/CharacterFlatListStyles";
 
 const CharacterFlatList = ({
+    setFlatListRef,
     isListEnd,
     characters,
     showCharacter,
@@ -21,72 +12,43 @@ const CharacterFlatList = ({
     endReachedThreshold,
 }) => {
     const FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 40,
-                    width: "100%",
-                }}
-            ></View>
-        );
+        return <View style={styles.separator}></View>;
     };
 
     const renderFooter = () => {
         return isListEnd === false ? (
             <View style={styles.footer}>
-                <ActivityIndicator color='black' style={{ margin: 15 }} />
+                <ActivityIndicator
+                    color='black'
+                    style={styles.activityIndicator}
+                />
             </View>
         ) : null;
     };
 
     return (
-        // <SafeAreaView style={styles.areaview}>
         <View style={styles.container}>
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    height: "100%",
-                }}
-            >
+            <View style={styles.flatListContainer}>
                 <FlatList
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        flex: 1,
-                    }}
+                    style={styles.flatList}
                     ItemSeparatorComponent={FlatListItemSeparator}
                     ListHeaderComponent={FlatListItemSeparator}
                     data={characters}
                     keyExtractor={(character) => character.id}
                     renderItem={({ item }) => (
                         <CharacterCard
-                        item = {item}
-                        showCharacter = {showCharacter}
-                        ></CharacterCard>
+                            item={item}
+                            showCharacter={showCharacter}
+                        />
                     )}
                     ListFooterComponent={renderFooter}
                     onEndReached={() => endReached()}
                     onEndReachedThreshold={endReachedThreshold}
+                    ref={(ref) => setFlatListRef(ref)}
                 />
             </View>
         </View>
-        // {/* </SafeAreaView> */}
     );
 };
 
 export default CharacterFlatList;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    footer: {
-        height: 50,
-    },
-});

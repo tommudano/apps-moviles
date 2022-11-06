@@ -34,7 +34,6 @@ const FilterDropDownRadioButton = ({
     };
 
     const setOptionSelected = (label, checked) => {
-        toggleDropDown();
         if (checked) {
             setFilterIndicationText(label);
         } else {

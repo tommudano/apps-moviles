@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     container: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     },
     filterMenu: {
         width: "90%",
-        backgroundColor: "#D9D9D9",
+        backgroundColor: colors.modalBodyBackgorund,
         borderRadius: 20,
         marginTop: 90,
         marginBottom: 20,
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "900",
         fontSize: 24,
-        color: "#26272C",
+        color: colors.defaultTextColor,
         letterSpacing: -0.32,
     },
     filtersHeaderRightSide: {
@@ -56,14 +57,14 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontWeight: "900",
         fontSize: 18,
-        color: "#747474",
+        color: colors.deleteFiltersButton,
         letterSpacing: -0.32,
     },
     closeModalButton: {
         fontFamily: "Roboto",
         fontWeight: "900",
         fontSize: 16,
-        color: "#26272C",
+        color: colors.defaultTextColor,
         letterSpacing: -0.32,
     },
     buttonContainer: {

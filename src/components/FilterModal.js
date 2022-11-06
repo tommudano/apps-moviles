@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     View,
     Modal,
@@ -22,7 +22,6 @@ const FilterModal = ({
     setStoredFilters,
     storedFilters,
     setSavedFilters,
-    savedFilters,
 }) => {
     const deleteFilters = () => {
         setStoredFilters({});

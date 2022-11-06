@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     button: {
         flex: 1,
-        backgroundColor: "#168241",
+        backgroundColor: colors.submitButton,
         borderRadius: 10,
         padding: 10,
         justifyContent: "center",
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         fontSize: 20,
         fontWeight: "700",
-        color: "#FFFFFF",
+        color: colors.buttonText,
     },
 });
 

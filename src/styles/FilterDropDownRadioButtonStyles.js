@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import colors from "../components/constants/colors";
 
 const styles = StyleSheet.create({
     dropDownContainer: {
@@ -6,8 +7,8 @@ const styles = StyleSheet.create({
         paddingTop: 30,
     },
     dropDownBody: {
-        backgroundColor: "#FFFFFF",
-        borderColor: "#ACACAC",
+        backgroundColor: colors.filterFieldsBackgorund,
+        borderColor: colors.filterBorder,
         borderWidth: 1,
         borderRadius: 5,
         paddingVertical: 5,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
         fontFamily: "Roboto",
         letterSpacing: -0.32,
         fontWeight: "600",
-        color: "#8F8F8F",
+        color: colors.filterTitle,
     },
 });
 

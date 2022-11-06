@@ -9,6 +9,7 @@ import NotFound from "../components/NotFound";
 import fetchCharacters from "../../utils/fetchCharacters";
 
 const HomeScreen = () => {
+    const [flatListRef, setFlatListRef] = useState();
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
     const [savedFilters, setSavedFilters] = useState({});
@@ -47,6 +48,9 @@ const HomeScreen = () => {
         );
     };
 
+    const moveFlatListToTop = () =>
+        flatListRef.scrollToOffset({ offset: 0, animated: true });
+
     useEffect(() => {
         fetchCharacters.loadAllCharacters(
             isListEnd,
@@ -71,6 +75,7 @@ const HomeScreen = () => {
                 setNotFound,
                 setcharactersAll
             );
+            moveFlatListToTop();
         }
     }, [savedFilters]);
 
@@ -92,12 +97,12 @@ const HomeScreen = () => {
                 setStoredFilters={setStoredFilters}
                 storedFilters={storedFilters}
                 setSavedFilters={setSavedFilters}
-                savedFilters={savedFilters}
             />
             {notFound ? (
                 <NotFound />
             ) : (
                 <CharacterFlatList
+                    setFlatListRef={setFlatListRef}
                     characters={charactersAll}
                     showCharacter={showCharacter}
                     endReached={loadAllCharacters}

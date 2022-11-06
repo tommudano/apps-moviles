@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import styles from "../styles/FilterTextInputStyles";
+import colors from "./constants/colors";
 
 const FilterTextInput = ({
     value,
@@ -22,7 +23,7 @@ const FilterTextInput = ({
             <TextInput
                 style={styles.textInput}
                 placeholder={`Filter by ${filterBy}`}
-                placeholderTextColor='#8F8F8F'
+                placeholderTextColor={colors.filterTitle}
                 value={storedFilterValue[value]}
                 onChangeText={(text) => saveFilter(text)}
             />

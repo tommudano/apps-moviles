@@ -16,8 +16,6 @@ const CharacterModal = ({
     character,
     setCharacterModalVisibility,
 }) => {
-    let url = "https://rickandmortyapi.com/api/character";
-
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);

@@ -1,69 +1,47 @@
 import React from "react";
-import {
-    View,
-    Text,
-    Modal,
-    TouchableOpacity,
-    ScrollView,
-    Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import metaDataForStatus from "./constants/statusValues";
-import styles from "../styles/CharacterCardsStyle";
+import styles from "../styles/CharacterCardsStyles";
 
+const CharacterCard = ({ item, showCharacter }) => {
+    const firstLetterToUpperCase = (word) => {
+        let firstLetterUpperCase = word.charAt(0).toUpperCase();
+        return firstLetterUpperCase + word.slice(1);
+    };
 
-const CharacterCard = ({
-    item,
-    showCharacter
-}) => {
-    return(
-        <View>
-        <TouchableOpacity
-                    onPress={() => showCharacter(item.id)}
-                >
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity onPress={() => showCharacter(item.id)}>
+                <View style={styles.cardContainer}>
                     <View
-                        style={{
-                            flex: 1,
-                            width: "100%",
-                            alignItems: "center",
-                            marginBottom: 10,
-                        }}
-                    >
-                        <View
-                            style={{
-                                flex: 1,
+                        style={[
+                            styles.sideStatus,
+                            {
                                 backgroundColor:
-                                    metaDataForStatus[
-                                        item.status.toLowerCase()
-                                    ].color,
-                                borderTopLeftRadius: 10,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
-                                borderTopRightRadius: 10,
-                                width: 290,
-                                height: 430,
-                            }}
-                        >
-                            <Image
-                                style={{
-                                    borderTopRightRadius: 10,
-                                    alignSelf: "flex-end",
-                                    justifyContent: "center",
-                                    width: "93.1%",
-                                    height: "75%",
-                                }}
-                                source={{ uri: item.image }}
-                            ></Image>
-                            <View style={styles.descripcion}>
-                                <Text style={styles.textoTouchable}>
-                                    {item.name}
-                                </Text>
-                            </View>
+                                    metaDataForStatus[item.status.toLowerCase()]
+                                        .color,
+                            },
+                        ]}
+                    >
+                        <Text style={styles.statusText}>
+                            {firstLetterToUpperCase(item.status)}
+                        </Text>
+                    </View>
+                    <View style={styles.mainContent}>
+                        <Image
+                            style={styles.characterImage}
+                            source={{ uri: item.image }}
+                        ></Image>
+                        <View style={styles.description}>
+                            <Text style={styles.characterName}>
+                                {item.name}
+                            </Text>
                         </View>
                     </View>
-        </TouchableOpacity>
-    </View>
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 
 export default CharacterCard;
-
