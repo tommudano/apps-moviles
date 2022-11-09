@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { StatusBar, View } from "react-native";
 import HomeScreen from "./src/screens/HomeScreen";
 import BottomTabNavigator from './navigator/BottomTabNavigator';
