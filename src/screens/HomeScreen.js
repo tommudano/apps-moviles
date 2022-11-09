@@ -8,7 +8,7 @@ import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
 import fetchCharacters from "../../utils/fetchCharacters";
 
-const HomeScreen = () => {
+const HomeScreen = ({ db }) => {
     const [flatListRef, setFlatListRef] = useState();
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
@@ -108,6 +108,7 @@ const HomeScreen = () => {
                     endReached={loadAllCharacters}
                     endReachedThreshold={8}
                     isListEnd={isListEnd}
+                    db={db}
                 />
             )}
             {displayCharacter ? (

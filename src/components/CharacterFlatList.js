@@ -10,6 +10,7 @@ const CharacterFlatList = ({
     showCharacter,
     endReached,
     endReachedThreshold,
+    db,
 }) => {
     const FlatListItemSeparator = () => {
         return <View style={styles.separator}></View>;
@@ -39,6 +40,7 @@ const CharacterFlatList = ({
                         <CharacterCard
                             item={item}
                             showCharacter={showCharacter}
+                            db={db}
                         />
                     )}
                     ListFooterComponent={renderFooter}

@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
     saveToFavouritesImage: {
         width: 50,
         height: 50,
+    },
+    saveToFavouritesContainer: {
         position: "absolute",
         bottom: 0,
         right: "10%",
