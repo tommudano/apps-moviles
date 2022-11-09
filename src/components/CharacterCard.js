@@ -36,11 +36,15 @@ const CharacterCard = ({ item, showCharacter }) => {
                             <Text style={styles.characterName}>
                                 {item.name}
                             </Text>
-                            <Image style={{width:'35%', height:'35%', justifyContent: "flex-end", alignSelf:'flex-end'}} source={require('../../assets/heart_border.png')} onPress={() => addedToFavorites}/>
                         </View>
                     </View>
                 </View>
             </TouchableOpacity>
+            <Image
+                style={styles.saveToFavouritesImage}
+                source={require("../../assets/heart_border.png")}
+                onPress={() => addedToFavorites}
+            />
         </View>
     );
 };
