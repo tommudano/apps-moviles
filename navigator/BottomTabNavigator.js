@@ -9,7 +9,7 @@ import { Image } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator({ db }) {
+export default function BottomTabNavigator() {
     return (
         <NavigationContainer>
             <Tab.Navigator
@@ -37,7 +37,6 @@ export default function BottomTabNavigator({ db }) {
                                 }}
                             />
                         ),
-                        db,
                     }}
                 />
                 <Tab.Screen

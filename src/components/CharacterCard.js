@@ -2,19 +2,25 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import metaDataForStatus from "./constants/statusValues";
 import styles from "../styles/CharacterCardsStyles";
-import { ref, set, push, getDatabase } from "firebase/database";
+import { ref, set, push, getDatabase, remove } from "firebase/database";
 
-const CharacterCard = ({ item, showCharacter }) => {
+const CharacterCard = ({ item, showCharacter, isFavourite }) => {
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);
     };
 
+    const handleFavouriteSetting = async () => {
+        if (isFavourite) {
+            await removeFromFavourites();
+        } else {
+            await saveToFavourites();
+        }
+    };
+
     const saveToFavourites = async () => {
         try {
             let db = getDatabase();
-            let image = await fetch(item.image);
-            console.log(item.image);
             await set(ref(db, `/favourites/${item.id}`), {
                 name: item.name,
                 gender: item.gender,
@@ -25,7 +31,15 @@ const CharacterCard = ({ item, showCharacter }) => {
                 status: item.status,
                 type: item.type,
             });
-            return objectId.key;
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const removeFromFavourites = async () => {
+        try {
+            let db = getDatabase();
+            await remove(ref(db, `/favourites/${item.id}`));
         } catch (error) {
             console.log(error.message);
         }
@@ -63,13 +77,16 @@ const CharacterCard = ({ item, showCharacter }) => {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => saveToFavourites()}
+                onPress={async () => await handleFavouriteSetting()}
                 style={styles.saveToFavouritesContainer}
             >
                 <Image
                     style={styles.saveToFavouritesImage}
-                    source={require("../../assets/heart_border.png")}
-                    onPress={() => addedToFavorites}
+                    source={
+                        isFavourite
+                            ? require("../../assets/savedToFavourites.png")
+                            : require("../../assets/heart_border.png")
+                    }
                 />
             </TouchableOpacity>
         </View>

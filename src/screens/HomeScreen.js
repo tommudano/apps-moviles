@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, StatusBar } from "react-native";
 import styles from "../styles/HomeScreenStyles";
 import Menu from "../components/Menu";
 import FilterModal from "../components/FilterModal";
@@ -8,7 +8,7 @@ import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
 import fetchCharacters from "../../utils/fetchCharacters";
 
-const HomeScreen = ({ db }) => {
+const HomeScreen = () => {
     const [flatListRef, setFlatListRef] = useState();
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
@@ -26,6 +26,7 @@ const HomeScreen = ({ db }) => {
     const [notFound, setNotFound] = useState(false);
 
     const loadAllCharacters = () => {
+        setIsListEnd(false);
         fetchCharacters.loadAllCharacters(
             isListEnd,
             savedFilters,
@@ -48,26 +49,21 @@ const HomeScreen = ({ db }) => {
         );
     };
 
-    const moveFlatListToTop = () =>
-        flatListRef.scrollToOffset({ offset: 0, animated: true });
+    const moveFlatListToTop = () => {
+        if (flatListRef) {
+            flatListRef.scrollToOffset({ offset: 0, animated: true });
+        }
+    };
 
     useEffect(() => {
-        fetchCharacters.loadAllCharacters(
-            isListEnd,
-            savedFilters,
-            page,
-            setPage,
-            setcharactersAll,
-            charactersAll,
-            setIsListEnd,
-            setLoading
-        );
+        loadAllCharacters();
     }, []);
 
     useEffect(() => {
         if (initialRender) {
             setInitialRender(false);
         } else {
+            setIsListEnd(false);
             fetchCharacters.reloadAllCharacters(
                 setLoading,
                 setPage,
@@ -79,8 +75,11 @@ const HomeScreen = ({ db }) => {
         }
     }, [savedFilters]);
 
+    useEffect(() => console.log("LIST END", isListEnd), [isListEnd]);
+
     return (
         <View style={styles.baseBackground}>
+            <StatusBar backgroundColor='#202329' />
             <Menu setModalVisible={setModalVisible} />
             {loading || loadingCharacter ? (
                 <View style={styles.loaderContainer}>
@@ -108,7 +107,7 @@ const HomeScreen = ({ db }) => {
                     endReached={loadAllCharacters}
                     endReachedThreshold={8}
                     isListEnd={isListEnd}
-                    db={db}
+                    isFavourite={false}
                 />
             )}
             {displayCharacter ? (
