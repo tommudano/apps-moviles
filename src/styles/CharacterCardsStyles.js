@@ -51,6 +51,16 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").height * 0.3,
         borderTopRightRadius: 10,
     },
+    saveToFavouritesImage: {
+        width: 50,
+        height: 50,
+    },
+    saveToFavouritesContainer: {
+        position: "absolute",
+        bottom: 0,
+        right: "10%",
+        margin: 10,
+    },
 });
 
 export default styles;

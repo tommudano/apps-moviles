@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, ActivityIndicator, StyleSheet, FlatList } from "react-native";
 import CharacterCard from "../components/CharacterCard";
 import styles from "../styles/CharacterFlatListStyles";
@@ -10,21 +10,22 @@ const CharacterFlatList = ({
     showCharacter,
     endReached,
     endReachedThreshold,
+    isFavourite,
 }) => {
     const FlatListItemSeparator = () => {
         return <View style={styles.separator}></View>;
     };
 
-    const renderFooter = () => {
-        return isListEnd === false ? (
-            <View style={styles.footer}>
+    const renderFooter = () => (
+        <View style={styles.footer}>
+            {isListEnd === false ? (
                 <ActivityIndicator
                     color='black'
                     style={styles.activityIndicator}
                 />
-            </View>
-        ) : null;
-    };
+            ) : null}
+        </View>
+    );
 
     return (
         <View style={styles.container}>
@@ -39,12 +40,14 @@ const CharacterFlatList = ({
                         <CharacterCard
                             item={item}
                             showCharacter={showCharacter}
+                            isFavourite={isFavourite}
                         />
                     )}
                     ListFooterComponent={renderFooter}
                     onEndReached={() => endReached()}
                     onEndReachedThreshold={endReachedThreshold}
                     ref={(ref) => setFlatListRef(ref)}
+                    extraData={characters}
                 />
             </View>
         </View>

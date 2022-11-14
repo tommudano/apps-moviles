@@ -8,7 +8,7 @@ import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
 import fetchCharacters from "../../utils/fetchCharacters";
 
-const HomeScreen = () => {
+const FavouritesScreen = () => {
     const [flatListRef, setFlatListRef] = useState();
     const [modalVisible, setModalVisible] = useState(false);
     const [storedFilters, setStoredFilters] = useState({});
@@ -19,63 +19,34 @@ const HomeScreen = () => {
     const [characterToShow, setCharacterToShow] = useState({});
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
-    const [charactersAll, setcharactersAll] = useState([]);
+    const [allFavouriteCharacters, setAllFavouriteCharacters] = useState([]);
     const [page, setPage] = useState(1);
-    const [isListEnd, setIsListEnd] = useState(false);
     const [initialRender, setInitialRender] = useState(true);
     const [notFound, setNotFound] = useState(false);
 
-    const loadAllCharacters = () => {
-        setIsListEnd(false);
-        fetchCharacters.loadAllCharacters(
-            isListEnd,
-            savedFilters,
-            page,
-            setPage,
-            setcharactersAll,
-            charactersAll,
-            setIsListEnd,
+    const loadAllFavouriteCharacters = () => {
+        fetchCharacters.loadAllFavouriteCharacters(
+            setAllFavouriteCharacters,
             setLoading
         );
     };
 
     const showCharacter = (characterId) => {
-        fetchCharacters.showCharacter(
-            characterId,
-            setLoadingCharacter,
-            setCharacterToShow,
-            setCharacterModalVisibility,
-            setDisplayCharacter
-        );
+        // fetchCharacters.showCharacter(
+        //     characterId,
+        //     setLoadingCharacter,
+        //     setCharacterToShow,
+        //     setCharacterModalVisibility,
+        //     setDisplayCharacter
+        // );
     };
 
-    const moveFlatListToTop = () => {
-        if (flatListRef) {
-            flatListRef.scrollToOffset({ offset: 0, animated: true });
-        }
-    };
+    const moveFlatListToTop = () =>
+        flatListRef.scrollToOffset({ offset: 0, animated: true });
 
     useEffect(() => {
-        loadAllCharacters();
+        loadAllFavouriteCharacters();
     }, []);
-
-    useEffect(() => {
-        if (initialRender) {
-            setInitialRender(false);
-        } else {
-            setIsListEnd(false);
-            fetchCharacters.reloadAllCharacters(
-                setLoading,
-                setPage,
-                savedFilters,
-                setNotFound,
-                setcharactersAll
-            );
-            moveFlatListToTop();
-        }
-    }, [savedFilters]);
-
-    useEffect(() => console.log("LIST END", isListEnd), [isListEnd]);
 
     return (
         <View style={styles.baseBackground}>
@@ -102,12 +73,12 @@ const HomeScreen = () => {
             ) : (
                 <CharacterFlatList
                     setFlatListRef={setFlatListRef}
-                    characters={charactersAll}
+                    characters={allFavouriteCharacters}
                     showCharacter={showCharacter}
-                    endReached={loadAllCharacters}
+                    endReached={loadAllFavouriteCharacters}
                     endReachedThreshold={8}
-                    isListEnd={isListEnd}
-                    isFavourite={false}
+                    isListEnd={true}
+                    isFavourite={true}
                 />
             )}
             {displayCharacter ? (
@@ -121,4 +92,4 @@ const HomeScreen = () => {
     );
 };
 
-export default HomeScreen;
+export default FavouritesScreen;
