@@ -1,10 +1,34 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Image, Animated } from "react-native";
 import metaDataForStatus from "./constants/statusValues";
 import styles from "../styles/CharacterCardsStyles";
 import { ref, set, push, getDatabase, remove } from "firebase/database";
+//import AnimateCard from './animation/addToFavsAnimation';
 
-const CharacterCard = ({ item, showCharacter, isFavourite }) => {
+const CharacterCard = ({
+    item,
+    showCharacter,
+    isFavourite,
+    removeFromList,
+}) => {
+    const value = useState(new Animated.Value(0))[0];
+    const size = useState(new Animated.Value(1))[0];
+
+    const animateCard = () => {
+        Animated.parallel([
+            Animated.timing(value, {
+                toValue: isFavourite ? -500 : 500,
+                duration: 1000,
+                useNativeDriver: false,
+            }),
+            Animated.timing(size, {
+                toValue: 0.1,
+                duration: 1000,
+                useNativeDriver: false,
+            }),
+        ]).start(() => handleFavouriteSetting());
+    };
+
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);
@@ -12,9 +36,9 @@ const CharacterCard = ({ item, showCharacter, isFavourite }) => {
 
     const handleFavouriteSetting = async () => {
         if (isFavourite) {
-            await removeFromFavourites();
+            removeFromFavourites();
         } else {
-            await saveToFavourites();
+            saveToFavourites();
         }
     };
 
@@ -46,7 +70,14 @@ const CharacterCard = ({ item, showCharacter, isFavourite }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <Animated.View
+            style={[
+                styles.container,
+                {
+                    transform: [{ translateX: value }, { scale: size }],
+                },
+            ]}
+        >
             <TouchableOpacity onPress={() => showCharacter(item.id)}>
                 <View style={styles.cardContainer}>
                     <View
@@ -77,7 +108,9 @@ const CharacterCard = ({ item, showCharacter, isFavourite }) => {
                 </View>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={async () => await handleFavouriteSetting()}
+                onPress={async () => {
+                    animateCard();
+                }}
                 style={styles.saveToFavouritesContainer}
             >
                 <Image
@@ -89,7 +122,7 @@ const CharacterCard = ({ item, showCharacter, isFavourite }) => {
                     }
                 />
             </TouchableOpacity>
-        </View>
+        </Animated.View>
     );
 };
 
