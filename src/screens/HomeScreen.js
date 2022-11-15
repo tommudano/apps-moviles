@@ -103,6 +103,7 @@ const HomeScreen = () => {
                 <CharacterFlatList
                     setFlatListRef={setFlatListRef}
                     characters={charactersAll}
+                    setCharacters={setcharactersAll}
                     showCharacter={showCharacter}
                     endReached={loadAllCharacters}
                     endReachedThreshold={8}

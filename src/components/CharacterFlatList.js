@@ -7,11 +7,18 @@ const CharacterFlatList = ({
     setFlatListRef,
     isListEnd,
     characters,
+    setCharacters,
     showCharacter,
     endReached,
     endReachedThreshold,
     isFavourite,
 }) => {
+    const removeFromList = (id) => {
+        setCharacters([
+            ...characters.filter((character) => character.id !== id),
+        ]);
+    };
+
     const FlatListItemSeparator = () => {
         return <View style={styles.separator}></View>;
     };
@@ -41,6 +48,7 @@ const CharacterFlatList = ({
                             item={item}
                             showCharacter={showCharacter}
                             isFavourite={isFavourite}
+                            removeFromList={removeFromList}
                         />
                     )}
                     ListFooterComponent={renderFooter}
