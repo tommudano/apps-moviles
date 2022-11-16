@@ -10,11 +10,11 @@ import fetchCharacters from "../../utils/fetchCharacters";
 import { useDispatch, useSelector } from "react-redux";
 import { setDisplayCharacter } from "../reducers/displayCharacterReducer";
 import { setHomeScreenLoading } from "../reducers/homeScreenLoadingReducer";
+import { setCharacterToShow } from "../reducers/characterToShowReducer";
 
 const HomeScreen = () => {
     const [flatListRef, setFlatListRef] = useState();
     const [loadingCharacter, setLoadingCharacter] = useState(false);
-    const [characterToShow, setCharacterToShow] = useState({});
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
     const [charactersAll, setcharactersAll] = useState([]);
@@ -26,6 +26,7 @@ const HomeScreen = () => {
     let loading = useSelector((state) => state.homeScreenLoading.value);
     let savedFilter = useSelector((state) => state.savedFilter.value);
     let displayCharacter = useSelector((state) => state.displayCharacter.value);
+    let characterToShow = useSelector((state) => state.characterToShow.value);
 
     const loadAllCharacters = () => {
         setIsListEnd(false);

@@ -125,7 +125,7 @@ const fetchCharacters = (() => {
         await fetch(`${url}/${characterId}`)
             .then((response) => response.json())
             .then((data) => {
-                setCharacterToShow(data);
+                dispatch(setCharacterToShow(data));
                 setCharacterModalVisibility(true);
                 dispatch(setDisplayCharacter(true));
             })

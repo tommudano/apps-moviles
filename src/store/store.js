@@ -4,6 +4,7 @@ import savedFilterReducer from "../reducers/savedFilterReducer";
 import filterModalVisibilityReducer from "../reducers/filterModalVisibilityReducer";
 import displayCharacterReducer from "../reducers/displayCharacterReducer";
 import homeScreenLoadingReducer from "../reducers/homeScreenLoadingReducer";
+import characterToShowReducer from "../reducers/characterToShowReducer";
 
 export const store = configureStore({
     reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
         filterModalVisibility: filterModalVisibilityReducer,
         displayCharacter: displayCharacterReducer,
         homeScreenLoading: homeScreenLoadingReducer,
+        characterToShow: characterToShowReducer,
     },
 });
