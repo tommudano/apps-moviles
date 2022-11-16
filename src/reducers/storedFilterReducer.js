@@ -14,18 +14,6 @@ export const storedFilterSlice = createSlice({
     },
 });
 
-// const allCharacterReducer = (state = [], action) => {
-//     switch (action.type) {
-//         case "@allCharacters/load":
-//             console.log(action.payload);
-//             return [...action.payload];
-//         default:
-//             return state;
-//     }
-// };
-
-// let allCharacterStore = createStore(allCharacterReducer);
-
 export const { load } = storedFilterSlice.actions;
 
 export default storedFilterSlice.reducer;

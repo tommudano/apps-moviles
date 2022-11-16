@@ -5,14 +5,7 @@ import styles from "../styles/RadioButtonOptionStyles";
 import { useSelector, useDispatch } from "react-redux";
 import { load } from "../reducers/storedFilterReducer";
 
-const RadioButtonOption = ({
-    groupValue,
-    value,
-    label,
-    setStoredFilters,
-    storedFilterValue,
-    setOptionSelected,
-}) => {
+const RadioButtonOption = ({ groupValue, value, label, setOptionSelected }) => {
     let storedFilter = useSelector((state) => state.storedFilter.value);
     const dispatch = useDispatch();
 

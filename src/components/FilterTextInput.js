@@ -5,17 +5,12 @@ import colors from "./constants/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { load } from "../reducers/storedFilterReducer";
 
-const FilterTextInput = ({
-    value,
-    setStoredFilters,
-    filterBy,
-    storedFilterValue,
-}) => {
+const FilterTextInput = ({ value, filterBy }) => {
     let storedFilter = useSelector((state) => state.storedFilter.value);
     const dispatch = useDispatch();
 
     const saveFilter = (filterValue) => {
-        let filters = { ...storedFilterValue };
+        let filters = { ...storedFilter };
         if (filterValue.trim()) {
             filters[value] = filterValue;
         } else {

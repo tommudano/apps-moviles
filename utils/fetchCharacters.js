@@ -17,9 +17,10 @@ const fetchCharacters = (() => {
         setPage,
         savedFilters,
         setNotFound,
-        setcharactersAll
+        setcharactersAll,
+        dispatch
     ) => {
-        setLoading(true);
+        dispatch(setLoading(true));
         setPage(2);
         let filterURL = buildFilterURL(savedFilters);
 
@@ -55,7 +56,7 @@ const fetchCharacters = (() => {
                 });
             })
             .catch((error) => console.log(error));
-        setLoading(false);
+        dispatch(setLoading(false));
     };
 
     const loadAllCharacters = async (
@@ -66,7 +67,8 @@ const fetchCharacters = (() => {
         setcharactersAll,
         charactersAll,
         setIsListEnd,
-        setLoading
+        setLoading,
+        dispatch
     ) => {
         if (!isListEnd) {
             let filterURL = buildFilterURL(savedFilters);
@@ -108,7 +110,7 @@ const fetchCharacters = (() => {
                 })
                 .catch((error) => console.log(error));
         }
-        setLoading(false);
+        dispatch(setLoading(false));
     };
 
     const showCharacter = async (
@@ -116,7 +118,8 @@ const fetchCharacters = (() => {
         setLoadingCharacter,
         setCharacterToShow,
         setCharacterModalVisibility,
-        setDisplayCharacter
+        setDisplayCharacter,
+        dispatch
     ) => {
         setLoadingCharacter(true);
         await fetch(`${url}/${characterId}`)
@@ -124,7 +127,7 @@ const fetchCharacters = (() => {
             .then((data) => {
                 setCharacterToShow(data);
                 setCharacterModalVisibility(true);
-                setDisplayCharacter(true);
+                dispatch(setDisplayCharacter(true));
             })
             .catch((error) => console.log(error));
         setLoadingCharacter(false);
@@ -139,14 +142,18 @@ const fetchCharacters = (() => {
         onValue(dbRef, async (snapshot) => {
             let characters = [];
             let charactersFromSnapshot = snapshot.val();
-            let characterIds = Object.keys(charactersFromSnapshot);
-            if (characterIds.length > 0) {
-                characterIds.forEach((characterId) => {
-                    let character = charactersFromSnapshot[characterId];
-                    character.id = characterId;
-                    characters.push(character);
-                });
-                setAllFavouriteCharacters([...characters]);
+            if (charactersFromSnapshot) {
+                let characterIds = Object.keys(charactersFromSnapshot);
+                if (characterIds.length > 0) {
+                    characterIds.forEach((characterId) => {
+                        let character = charactersFromSnapshot[characterId];
+                        character.id = characterId;
+                        characters.push(character);
+                    });
+                    setAllFavouriteCharacters([...characters]);
+                }
+            } else {
+                setAllFavouriteCharacters([]);
             }
         });
         setLoading(false);

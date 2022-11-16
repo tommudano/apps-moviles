@@ -7,15 +7,13 @@ import CharacterFlatList from "../components/CharacterFlatList";
 import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
 import fetchCharacters from "../../utils/fetchCharacters";
+import { useDispatch, useSelector } from "react-redux";
+import { setDisplayCharacter } from "../reducers/displayCharacterReducer";
+import { setHomeScreenLoading } from "../reducers/homeScreenLoadingReducer";
 
 const HomeScreen = () => {
     const [flatListRef, setFlatListRef] = useState();
-    const [modalVisible, setModalVisible] = useState(false);
-    const [storedFilters, setStoredFilters] = useState({});
-    const [savedFilters, setSavedFilters] = useState({});
-    const [loading, setLoading] = useState(true);
     const [loadingCharacter, setLoadingCharacter] = useState(false);
-    const [displayCharacter, setDisplayCharacter] = useState(false);
     const [characterToShow, setCharacterToShow] = useState({});
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
@@ -24,18 +22,23 @@ const HomeScreen = () => {
     const [isListEnd, setIsListEnd] = useState(false);
     const [initialRender, setInitialRender] = useState(true);
     const [notFound, setNotFound] = useState(false);
+    const dispatch = useDispatch();
+    let loading = useSelector((state) => state.homeScreenLoading.value);
+    let savedFilter = useSelector((state) => state.savedFilter.value);
+    let displayCharacter = useSelector((state) => state.displayCharacter.value);
 
     const loadAllCharacters = () => {
         setIsListEnd(false);
         fetchCharacters.loadAllCharacters(
             isListEnd,
-            savedFilters,
+            savedFilter,
             page,
             setPage,
             setcharactersAll,
             charactersAll,
             setIsListEnd,
-            setLoading
+            setHomeScreenLoading,
+            dispatch
         );
     };
 
@@ -45,7 +48,8 @@ const HomeScreen = () => {
             setLoadingCharacter,
             setCharacterToShow,
             setCharacterModalVisibility,
-            setDisplayCharacter
+            setDisplayCharacter,
+            dispatch
         );
     };
 
@@ -65,20 +69,21 @@ const HomeScreen = () => {
         } else {
             setIsListEnd(false);
             fetchCharacters.reloadAllCharacters(
-                setLoading,
+                setHomeScreenLoading,
                 setPage,
-                savedFilters,
+                savedFilter,
                 setNotFound,
-                setcharactersAll
+                setcharactersAll,
+                dispatch
             );
             moveFlatListToTop();
         }
-    }, [savedFilters]);
+    }, [savedFilter]);
 
     return (
         <View style={styles.baseBackground}>
             <StatusBar backgroundColor='#202329' />
-            <Menu setModalVisible={setModalVisible} />
+            <Menu />
             {loading || loadingCharacter ? (
                 <View style={styles.loaderContainer}>
                     <ActivityIndicator
@@ -88,13 +93,7 @@ const HomeScreen = () => {
                     />
                 </View>
             ) : null}
-            <FilterModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                setStoredFilters={setStoredFilters}
-                storedFilters={storedFilters}
-                setSavedFilters={setSavedFilters}
-            />
+            <FilterModal />
             {notFound ? (
                 <NotFound />
             ) : (

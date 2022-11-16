@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Modal,
@@ -17,26 +17,25 @@ import {
 } from "./constants/filterValues";
 import { useSelector, useDispatch } from "react-redux";
 import { load } from "../reducers/storedFilterReducer";
+import { loadSavedFilters } from "../reducers/savedFilterReducer";
+import { setFilterModalVisiblity } from "../reducers/filterModalVisibilityReducer";
 
-const FilterModal = ({
-    modalVisible,
-    setModalVisible,
-    setStoredFilters,
-    storedFilters,
-    setSavedFilters,
-}) => {
+const FilterModal = () => {
+    let modalVisible = useSelector(
+        (state) => state.filterModalVisibility.value
+    );
     let storedFilter = useSelector((state) => state.storedFilter.value);
     const dispatch = useDispatch();
 
     const deleteFilters = () => {
         dispatch(load({}));
-        setSavedFilters({});
-        setModalVisible(false);
+        dispatch(loadSavedFilters({}));
+        dispatch(setFilterModalVisiblity(false));
     };
 
     const applyFilters = () => {
-        setSavedFilters({ ...storedFilter });
-        setModalVisible(false);
+        dispatch(loadSavedFilters(storedFilter));
+        dispatch(setFilterModalVisiblity(false));
     };
 
     return (
@@ -62,7 +61,9 @@ const FilterModal = ({
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    onPress={() => setModalVisible(false)}
+                                    onPress={() =>
+                                        dispatch(setFilterModalVisiblity(false))
+                                    }
                                 >
                                     <Text style={styles.closeModalButton}>
                                         X
@@ -71,37 +72,21 @@ const FilterModal = ({
                             </View>
                         </View>
                         <View style={styles.filterBody}>
+                            <FilterTextInput value='name' filterBy='name' />
                             <FilterTextInput
-                                setStoredFilters={setStoredFilters}
-                                value='name'
-                                storedFilterValue={storedFilters}
-                                filterBy='name'
-                            />
-                            <FilterTextInput
-                                setStoredFilters={setStoredFilters}
                                 value='species'
-                                storedFilterValue={storedFilters}
                                 filterBy='species'
                             />
-                            <FilterTextInput
-                                setStoredFilters={setStoredFilters}
-                                value='type'
-                                storedFilterValue={storedFilters}
-                                filterBy='type'
-                            />
+                            <FilterTextInput value='type' filterBy='type' />
                             <FilterDropDownRadioButton
                                 groupValue='gender'
                                 filterOptions={genderFilterOptions}
                                 filterBy='gender'
-                                setStoredFilters={setStoredFilters}
-                                storedFilterValue={storedFilters}
                             />
                             <FilterDropDownRadioButton
                                 groupValue='status'
                                 filterOptions={statusFilterOptions}
                                 filterBy='status'
-                                setStoredFilters={setStoredFilters}
-                                storedFilterValue={storedFilters}
                             />
                         </View>
                         <TouchableOpacity onPress={() => applyFilters()}>
