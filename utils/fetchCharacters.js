@@ -1,4 +1,5 @@
 import { ref, getDatabase, onValue } from "firebase/database";
+import React from "react";
 
 const fetchCharacters = (() => {
     let url = "https://rickandmortyapi.com/api/character";

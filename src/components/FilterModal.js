@@ -15,6 +15,8 @@ import {
     genderFilterOptions,
     statusFilterOptions,
 } from "./constants/filterValues";
+import { useSelector, useDispatch } from "react-redux";
+import { load } from "../reducers/storedFilterReducer";
 
 const FilterModal = ({
     modalVisible,
@@ -23,14 +25,17 @@ const FilterModal = ({
     storedFilters,
     setSavedFilters,
 }) => {
+    let storedFilter = useSelector((state) => state.storedFilter.value);
+    const dispatch = useDispatch();
+
     const deleteFilters = () => {
-        setStoredFilters({});
+        dispatch(load({}));
         setSavedFilters({});
         setModalVisible(false);
     };
 
     const applyFilters = () => {
-        setSavedFilters({ ...storedFilters });
+        setSavedFilters({ ...storedFilter });
         setModalVisible(false);
     };
 

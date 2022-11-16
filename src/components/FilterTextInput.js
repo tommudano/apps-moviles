@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import styles from "../styles/FilterTextInputStyles";
 import colors from "./constants/colors";
+import { useSelector, useDispatch } from "react-redux";
+import { load } from "../reducers/storedFilterReducer";
 
 const FilterTextInput = ({
     value,
@@ -9,13 +11,17 @@ const FilterTextInput = ({
     filterBy,
     storedFilterValue,
 }) => {
+    let storedFilter = useSelector((state) => state.storedFilter.value);
+    const dispatch = useDispatch();
+
     const saveFilter = (filterValue) => {
+        let filters = { ...storedFilterValue };
         if (filterValue.trim()) {
-            storedFilterValue[value] = filterValue;
+            filters[value] = filterValue;
         } else {
-            delete storedFilterValue[value];
+            delete filters[value];
         }
-        setStoredFilters({ ...storedFilterValue });
+        dispatch(load(filters));
     };
 
     return (
@@ -24,7 +30,7 @@ const FilterTextInput = ({
                 style={styles.textInput}
                 placeholder={`Filter by ${filterBy}`}
                 placeholderTextColor={colors.filterTitle}
-                value={storedFilterValue[value]}
+                value={storedFilter[value]}
                 onChangeText={(text) => saveFilter(text)}
             />
         </View>
