@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, ActivityIndicator, StatusBar } from "react-native";
 import styles from "../styles/HomeScreenStyles";
-import Menu from "../components/Menu";
-import FilterModal from "../components/FilterModal";
+import MenuFavorites from "../components/MenuFavorites";
 import CharacterFlatList from "../components/CharacterFlatList";
 import CharacterModal from "../components/CharacterModal";
 import NotFound from "../components/NotFound";
@@ -10,9 +9,6 @@ import fetchCharacters from "../../utils/fetchCharacters";
 
 const FavouritesScreen = () => {
     const [flatListRef, setFlatListRef] = useState();
-    const [modalVisible, setModalVisible] = useState(false);
-    const [storedFilters, setStoredFilters] = useState({});
-    const [savedFilters, setSavedFilters] = useState({});
     const [loading, setLoading] = useState(true);
     const [loadingCharacter, setLoadingCharacter] = useState(false);
     const [displayCharacter, setDisplayCharacter] = useState(false);
@@ -26,7 +22,7 @@ const FavouritesScreen = () => {
             setAllFavouriteCharacters,
             setLoading
         );
-    };
+    }; 
 
     const showCharacter = (characterId) => {
         setLoadingCharacter(true);
@@ -47,7 +43,7 @@ const FavouritesScreen = () => {
     return (
         <View style={styles.baseBackground}>
             <StatusBar backgroundColor='#202329' />
-            <Menu setModalVisible={setModalVisible} />
+            <MenuFavorites/>
             {loading || loadingCharacter ? (
                 <View style={styles.loaderContainer}>
                     <ActivityIndicator
@@ -57,13 +53,6 @@ const FavouritesScreen = () => {
                     />
                 </View>
             ) : null}
-            <FilterModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                setStoredFilters={setStoredFilters}
-                storedFilters={storedFilters}
-                setSavedFilters={setSavedFilters}
-            />
             {allFavouriteCharacters.length === 0 ? (
                 <NotFound />
             ) : (
