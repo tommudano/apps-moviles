@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback, Image } from "react-native";
 import styles from "../styles/FilterDropDownRadioButtonStyles";
 import RadioButtonOption from "./RadioButtonOption";
+import { useSelector, useDispatch } from "react-redux";
+import { load } from "../reducers/storedFilterReducer";
 
-const FilterDropDownRadioButton = ({
-    groupValue,
-    filterBy,
-    filterOptions,
-    setStoredFilters,
-    storedFilterValue,
-}) => {
+const FilterDropDownRadioButton = ({ groupValue, filterBy, filterOptions }) => {
+    let storedFilter = useSelector((state) => state.storedFilter.value);
+    const dispatch = useDispatch();
+
     const getLabel = (key) => {
         let label;
         filterOptions.forEach((option) => {
@@ -23,8 +22,8 @@ const FilterDropDownRadioButton = ({
     const [openDropIndicatorRotation, setOpenDropIndicatorRotation] =
         useState("0deg");
     const [filterIndicationText, setFilterIndicationText] = useState(
-        storedFilterValue[groupValue]
-            ? getLabel(storedFilterValue[groupValue])
+        storedFilter[groupValue]
+            ? getLabel(storedFilter[groupValue])
             : `Filter by ${filterBy}`
     );
 
@@ -70,8 +69,6 @@ const FilterDropDownRadioButton = ({
                                   groupValue={groupValue}
                                   label={label}
                                   value={value}
-                                  setStoredFilters={setStoredFilters}
-                                  storedFilterValue={storedFilterValue}
                                   setOptionSelected={setOptionSelected}
                               />
                           ))

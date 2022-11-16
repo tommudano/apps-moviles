@@ -16,16 +16,13 @@ const FavouritesScreen = () => {
     const [characterModalVisibility, setCharacterModalVisibility] =
         useState(false);
     const [allFavouriteCharacters, setAllFavouriteCharacters] = useState([]);
-    const [page, setPage] = useState(1);
-    const [initialRender, setInitialRender] = useState(true);
-    const [notFound, setNotFound] = useState(false);
 
     const loadAllFavouriteCharacters = () => {
         fetchCharacters.loadAllFavouriteCharacters(
             setAllFavouriteCharacters,
             setLoading
         );
-    };
+    }; 
 
     const showCharacter = (characterId) => {
         setLoadingCharacter(true);
@@ -38,9 +35,6 @@ const FavouritesScreen = () => {
         setDisplayCharacter(true);
         setLoadingCharacter(false);
     };
-
-    const moveFlatListToTop = () =>
-        flatListRef.scrollToOffset({ offset: 0, animated: true });
 
     useEffect(() => {
         loadAllFavouriteCharacters();
@@ -59,7 +53,7 @@ const FavouritesScreen = () => {
                     />
                 </View>
             ) : null}
-            {notFound ? (
+            {allFavouriteCharacters.length === 0 ? (
                 <NotFound />
             ) : (
                 <CharacterFlatList
