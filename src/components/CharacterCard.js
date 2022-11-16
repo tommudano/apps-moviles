@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, Animated } from "react-native";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    Animated,
+    Dimensions,
+} from "react-native";
 import metaDataForStatus from "./constants/statusValues";
 import styles from "../styles/CharacterCardsStyles";
 import { ref, set, push, getDatabase, remove } from "firebase/database";
@@ -13,19 +20,35 @@ const CharacterCard = ({
 }) => {
     const value = useState(new Animated.Value(0))[0];
     const size = useState(new Animated.Value(1))[0];
+    const marginTop = useState(new Animated.Value(0))[0];
+    const valueY = useState(new Animated.Value(0))[0];
 
     const animateCard = () => {
-        Animated.parallel([
-            Animated.timing(value, {
-                toValue: isFavourite ? -500 : 500,
-                duration: 1000,
-                useNativeDriver: false,
-            }),
-            Animated.timing(size, {
-                toValue: 0.1,
-                duration: 1000,
-                useNativeDriver: false,
-            }),
+        Animated.stagger(200, [
+            Animated.parallel([
+                Animated.timing(value, {
+                    toValue: isFavourite ? -500 : 500,
+                    duration: 1000,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(size, {
+                    toValue: 0.1,
+                    duration: 1000,
+                    useNativeDriver: false,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(marginTop, {
+                    toValue: -Dimensions.get("window").height,
+                    duration: 800,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(valueY, {
+                    toValue: Dimensions.get("window").height,
+                    duration: 800,
+                    useNativeDriver: false,
+                }),
+            ]),
         ]).start(() => handleFavouriteSetting());
     };
 
@@ -70,58 +93,65 @@ const CharacterCard = ({
     };
 
     return (
-        <Animated.View
-            style={[
-                styles.container,
-                {
-                    transform: [{ translateX: value }, { scale: size }],
-                },
-            ]}
-        >
-            <TouchableOpacity onPress={() => showCharacter(item.id)}>
-                <View style={styles.cardContainer}>
-                    <View
-                        style={[
-                            styles.sideStatus,
-                            {
-                                backgroundColor:
-                                    metaDataForStatus[item.status.toLowerCase()]
-                                        .color,
-                            },
-                        ]}
-                    >
-                        <Text style={styles.statusText}>
-                            {firstLetterToUpperCase(item.status)}
-                        </Text>
-                    </View>
-                    <View style={styles.mainContent}>
-                        <Image
-                            style={styles.characterImage}
-                            source={{ uri: item.image }}
-                        ></Image>
-                        <View style={styles.description}>
-                            <Text style={styles.characterName}>
-                                {item.name}
+        <Animated.View style={{ marginTop }}>
+            <Animated.View
+                style={[
+                    styles.container,
+                    {
+                        transform: [
+                            { translateX: value },
+                            { translateY: valueY },
+                            { scale: size },
+                        ],
+                    },
+                ]}
+            >
+                <TouchableOpacity onPress={() => showCharacter(item.id)}>
+                    <View style={styles.cardContainer}>
+                        <View
+                            style={[
+                                styles.sideStatus,
+                                {
+                                    backgroundColor:
+                                        metaDataForStatus[
+                                            item.status.toLowerCase()
+                                        ].color,
+                                },
+                            ]}
+                        >
+                            <Text style={styles.statusText}>
+                                {firstLetterToUpperCase(item.status)}
                             </Text>
                         </View>
+                        <View style={styles.mainContent}>
+                            <Image
+                                style={styles.characterImage}
+                                source={{ uri: item.image }}
+                            ></Image>
+                            <View style={styles.description}>
+                                <Text style={styles.characterName}>
+                                    {item.name}
+                                </Text>
+                            </View>
+                        </View>
                     </View>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={async () => {
-                    animateCard();
-                }}
-                style={styles.saveToFavouritesContainer}
-            >
-                <Image
-                    style={styles.saveToFavouritesImage}
-                    source={
-                        isFavourite
-                            ? require("../../assets/savedToFavourites.png")
-                            : require("../../assets/heart_border.png")
-                    }
-                />
-            </TouchableOpacity>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={async () => {
+                        animateCard();
+                    }}
+                    style={styles.saveToFavouritesContainer}
+                >
+                    <Image
+                        style={styles.saveToFavouritesImage}
+                        source={
+                            isFavourite
+                                ? require("../../assets/savedToFavourites.png")
+                                : require("../../assets/heart_border.png")
+                        }
+                    />
+                </TouchableOpacity>
+            </Animated.View>
         </Animated.View>
     );
 };
