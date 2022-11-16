@@ -16,6 +16,7 @@ const colors = {
     menuBackgorund: "#FFFFFF",
     radioButtonColor: "#057AFF",
     submitButton: "#168241",
+    disabledSubmitButton: "#cccccc",
     buttonText: "#FFFFFF",
 };
 

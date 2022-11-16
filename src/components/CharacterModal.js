@@ -10,11 +10,13 @@ import {
 import styles from "../styles/CharacterModalStyles";
 import metaDataForStatus from "./constants/statusValues";
 import speciesValues from "../../utils/speciesValues";
+import CharacterComments from "./CharacterComments";
 
 const CharacterModal = ({
     visible,
     character,
     setCharacterModalVisibility,
+    hasComments,
 }) => {
     const firstLetterToUpperCase = (word) => {
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
@@ -175,6 +177,9 @@ const CharacterModal = ({
                                     </Text>
                                 </View>
                             </View>
+                            {hasComments ? (
+                                <CharacterComments characterId={character.id} />
+                            ) : null}
                         </View>
                     </View>
                 </View>
