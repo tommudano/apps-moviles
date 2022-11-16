@@ -4,7 +4,7 @@ import styles from "../styles/CommentsListStyles";
 import Comment from "./Comment";
 
 const CommentsList = ({ comments }) => {
-    const renderItem = ({ item }) => <Comment comment={item} />;
+    const renderItem = ({ item }) => <Comment comment={item.comment} />;
 
     const renderFooter = () => <View style={styles.footer}></View>;
 

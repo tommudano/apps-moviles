@@ -32,7 +32,7 @@ const CharacterComments = ({ characterId }) => {
                 let dataDB = await snapshot.val();
                 if (dataDB) {
                     Object.keys(dataDB).forEach((id) => {
-                        comments.push(dataDB[id].comment);
+                        comments.push({ id, comment: dataDB[id].comment });
                     });
                     setComments([...comments]);
                 } else {
@@ -47,6 +47,7 @@ const CharacterComments = ({ characterId }) => {
 
     const saveComment = async () => {
         if (comment.trim() !== "") {
+            setComment("");
             try {
                 let db = getDatabase();
                 let objectId = await push(
@@ -81,6 +82,7 @@ const CharacterComments = ({ characterId }) => {
                 placeholder={`Leave a comment`}
                 placeholderTextColor={colors.defaultTextColor}
                 onChangeText={(text) => setComment(text)}
+                value={comment}
             />
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
