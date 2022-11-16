@@ -3,10 +3,14 @@ import { View, TextInput, TouchableOpacity } from "react-native";
 import styles from "../styles/CharacterCommentsStyles";
 import CommentsButton from "./CommentsButton";
 import colors from "./constants/colors";
-import { ref, set, push, getDatabase } from "firebase/database";
+import { ref, set, push, getDatabase, onValue } from "firebase/database";
+import CommentsModal from "./CommentsModal";
 
 const CharacterComments = ({ characterId }) => {
     const [comment, setComment] = useState("");
+    const [comments, setComments] = useState([]);
+    const [commentsVisible, setCommentsVisible] = useState(false);
+    const [commentsLoading, setCommentsLoading] = useState(false); // ACTIVITY INDICATOR
     const [disabledSaveButton, setDisabledSetbutton] = useState(
         comment.trim() === ""
     );
@@ -18,6 +22,28 @@ const CharacterComments = ({ characterId }) => {
             setDisabledSetbutton(true);
         }
     }, [comment]);
+
+    const loadComments = async () => {
+        try {
+            const db = getDatabase();
+            const dbRef = ref(db, `favourites/${characterId}/comments`);
+            onValue(dbRef, async (snapshot) => {
+                let comments = [];
+                let dataDB = await snapshot.val();
+                if (dataDB) {
+                    Object.keys(dataDB).forEach((id) => {
+                        comments.push(dataDB[id].comment);
+                    });
+                    setComments([...comments]);
+                } else {
+                    setComments([]);
+                }
+            });
+            return true;
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     const saveComment = async () => {
         if (comment.trim() !== "") {
@@ -39,6 +65,11 @@ const CharacterComments = ({ characterId }) => {
                 console.log(error.message);
             }
         }
+    };
+
+    const displayComments = async () => {
+        await loadComments();
+        setCommentsVisible(true);
     };
 
     return (
@@ -66,13 +97,21 @@ const CharacterComments = ({ characterId }) => {
                         }
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonTouchable}>
+                <TouchableOpacity
+                    style={styles.buttonTouchable}
+                    onPress={() => displayComments()}
+                >
                     <CommentsButton
                         text='View Comments'
                         color={colors.radioButtonColor}
                     />
                 </TouchableOpacity>
             </View>
+            <CommentsModal
+                visible={commentsVisible}
+                setModalVisible={setCommentsVisible}
+                comments={comments}
+            />
         </View>
     );
 };
