@@ -75,8 +75,6 @@ const HomeScreen = () => {
         }
     }, [savedFilters]);
 
-    useEffect(() => console.log("LIST END", isListEnd), [isListEnd]);
-
     return (
         <View style={styles.baseBackground}>
             <StatusBar backgroundColor='#202329' />
@@ -116,6 +114,7 @@ const HomeScreen = () => {
                     visible={characterModalVisibility}
                     character={characterToShow}
                     setCharacterModalVisibility={setCharacterModalVisibility}
+                    hasComments={false}
                 />
             ) : null}
         </View>

@@ -32,13 +32,15 @@ const FavouritesScreen = () => {
     };
 
     const showCharacter = (characterId) => {
-        // fetchCharacters.showCharacter(
-        //     characterId,
-        //     setLoadingCharacter,
-        //     setCharacterToShow,
-        //     setCharacterModalVisibility,
-        //     setDisplayCharacter
-        // );
+        setLoadingCharacter(true);
+        setCharacterToShow(
+            allFavouriteCharacters.find(
+                (character) => character.id === characterId
+            )
+        );
+        setCharacterModalVisibility(true);
+        setDisplayCharacter(true);
+        setLoadingCharacter(false);
     };
 
     const moveFlatListToTop = () =>
@@ -86,6 +88,7 @@ const FavouritesScreen = () => {
                     visible={characterModalVisibility}
                     character={characterToShow}
                     setCharacterModalVisibility={setCharacterModalVisibility}
+                    hasComments={true}
                 />
             ) : null}
         </View>

@@ -67,7 +67,6 @@ const fetchCharacters = (() => {
         setIsListEnd,
         setLoading
     ) => {
-        console.log("FUNCTION CALL");
         if (!isListEnd) {
             let filterURL = buildFilterURL(savedFilters);
             await fetch(`${url}?page=${page}${filterURL}`)
@@ -93,7 +92,7 @@ const fetchCharacters = (() => {
                                 );
                             }
                         );
-                        console.log(processedData.length, page);
+
                         if (
                             data.results &&
                             data.results.length > 0 &&
