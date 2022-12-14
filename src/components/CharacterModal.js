@@ -11,6 +11,8 @@ import styles from "../styles/CharacterModalStyles";
 import metaDataForStatus from "./constants/statusValues";
 import speciesValues from "../../utils/speciesValues";
 import CharacterComments from "./CharacterComments";
+import { ref, set, push, getDatabase } from "firebase/database";
+import { useEffect } from "react";
 
 const CharacterModal = ({
     visible,
@@ -22,6 +24,23 @@ const CharacterModal = ({
         let firstLetterUpperCase = word.charAt(0).toUpperCase();
         return firstLetterUpperCase + word.slice(1);
     };
+
+    useEffect(() => {
+        async function logHistory() {
+            if (visible) {
+                try {
+                    const db = getDatabase();
+                    let objectHistoryId = await push(ref(db, `/history/`));
+                    await set(ref(db, `/history/${objectHistoryId.key}`), {
+                        event: `Viewed ${character.name}'s card`,
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+        logHistory();
+    }, [visible]);
 
     return (
         <Modal visible={visible} transparent={true} animationType='slide'>
@@ -178,7 +197,10 @@ const CharacterModal = ({
                                 </View>
                             </View>
                             {hasComments ? (
-                                <CharacterComments characterId={character.id} />
+                                <CharacterComments
+                                    characterId={character.id}
+                                    characterName={character.name}
+                                />
                             ) : null}
                         </View>
                     </View>

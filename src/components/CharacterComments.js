@@ -6,11 +6,10 @@ import colors from "./constants/colors";
 import { ref, set, push, getDatabase, onValue } from "firebase/database";
 import CommentsModal from "./CommentsModal";
 
-const CharacterComments = ({ characterId }) => {
+const CharacterComments = ({ characterId, characterName }) => {
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
     const [commentsVisible, setCommentsVisible] = useState(false);
-    const [commentsLoading, setCommentsLoading] = useState(false); // ACTIVITY INDICATOR
     const [disabledSaveButton, setDisabledSetbutton] = useState(
         comment.trim() === ""
     );
@@ -39,6 +38,10 @@ const CharacterComments = ({ characterId }) => {
                     setComments([]);
                 }
             });
+            let objectHistoryId = await push(ref(db, `/history/`));
+            await set(ref(db, `/history/${objectHistoryId.key}`), {
+                event: `Viewed ${characterName}'s comments`,
+            });
             return true;
         } catch (error) {
             console.log(error.message);
@@ -62,6 +65,10 @@ const CharacterComments = ({ characterId }) => {
                         comment,
                     }
                 );
+                let objectHistoryId = await push(ref(db, `/history/`));
+                await set(ref(db, `/history/${objectHistoryId.key}`), {
+                    event: `Added a comment for ${characterName}`,
+                });
             } catch (error) {
                 console.log(error.message);
             }

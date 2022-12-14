@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     saveToFavouritesContainer: {
         position: "absolute",
-        bottom: 0,
+        top: 0,
         right: "10%",
         margin: 10,
     },

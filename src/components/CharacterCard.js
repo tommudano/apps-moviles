@@ -78,6 +78,10 @@ const CharacterCard = ({
                 status: item.status,
                 type: item.type,
             });
+            let objectHistoryId = await push(ref(db, `/history/`));
+            await set(ref(db, `/history/${objectHistoryId.key}`), {
+                event: `Saved ${item.name} to favourites`,
+            });
         } catch (error) {
             console.log(error.message);
         }
@@ -87,6 +91,10 @@ const CharacterCard = ({
         try {
             let db = getDatabase();
             await remove(ref(db, `/favourites/${item.id}`));
+            let objectHistoryId = await push(ref(db, `/history/`));
+            await set(ref(db, `/history/${objectHistoryId.key}`), {
+                event: `Removed ${item.name} from favourites`,
+            });
         } catch (error) {
             console.log(error.message);
         }

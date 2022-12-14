@@ -4,6 +4,7 @@ import { NavigationContainer, StackActions } from "@react-navigation/native";
 import HomeScreen from "../src/screens/HomeScreen";
 import FavoritesScreen from "../src/screens/FavoritesScreen";
 import FaqsScreen from "../src/screens/FaqsScreen";
+import HistoryScreen from "../src/screens/HistoryScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image } from "react-native";
 
@@ -40,7 +41,7 @@ export default function BottomTabNavigator() {
                     }}
                 />
                 <Tab.Screen
-                    name='Favorites'
+                    name='Favourites'
                     component={FavoritesScreen}
                     options={{
                         tabBarIcon: ({ focused }) => (
@@ -53,6 +54,26 @@ export default function BottomTabNavigator() {
                                 style={{
                                     width: 50,
                                     height: 50,
+                                    color: "tomato",
+                                }}
+                            />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name='History'
+                    component={HistoryScreen}
+                    options={{
+                        tabBarIcon: ({ focused }) => (
+                            <Image
+                                source={
+                                    focused
+                                        ? require("../assets/history_red.png")
+                                        : require("../assets/history_black.png")
+                                }
+                                style={{
+                                    width: 40,
+                                    height: 40,
                                     color: "tomato",
                                 }}
                             />
